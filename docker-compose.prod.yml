@@ -1,0 +1,93 @@
+# ATLAS production stack — pulls prebuilt images from a registry (GHCR).
+# No building on the host; deploy anywhere with:
+#   docker compose --env-file .env.atlas -f docker-compose.prod.yml pull
+#   docker compose --env-file .env.atlas -f docker-compose.prod.yml up -d
+# See DEPLOY.md. Put server (:9000) and mcp (:9100) behind a reverse proxy + TLS.
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS:?set PG_PASS in .env.atlas}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - redis:/data
+
+  server:
+    image: ghcr.io/itsramananshul/atlas-server:${ATLAS_VERSION:-latest}
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?set AUTHENTIK_SECRET_KEY in .env.atlas}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_REDIS__HOST: redis
+    ports:
+      - "${ATLAS_HTTP_BIND:-0.0.0.0:9000}:9000"
+      - "${ATLAS_HTTPS_BIND:-0.0.0.0:9443}:9443"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    image: ghcr.io/itsramananshul/atlas-server:${ATLAS_VERSION:-latest}
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_REDIS__HOST: redis
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  mcp:
+    image: ghcr.io/itsramananshul/atlas-mcp:${ATLAS_VERSION:-latest}
+    restart: unless-stopped
+    environment:
+      AUTHENTIK_URL: ${MCP_AUTHENTIK_URL:-http://server:9000}
+      AUTHENTIK_TOKEN: ${MCP_AUTHENTIK_TOKEN}
+      MCP_TRANSPORT: http
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: "9100"
+      ATLAS_MCP_READONLY: ${ATLAS_MCP_READONLY:-false}
+      ATLAS_MCP_ALLOW: ${ATLAS_MCP_ALLOW:-}
+      ATLAS_MCP_DENY: ${ATLAS_MCP_DENY:-}
+    ports:
+      # localhost-only by default — expose via the reverse proxy with auth + TLS.
+      - "${MCP_BIND:-127.0.0.1:9100}:9100"
+    depends_on:
+      - server
+
+volumes:
+  database:
+  redis:
