@@ -1,53 +1,81 @@
 <p align="center">
-    <img src="https://goauthentik.io/img/icon_top_brand_colour.svg" height="150" alt="authentik logo">
+    <img src="web/src/assets/icons/icon.svg" height="120" alt="ATLAS">
+</p>
+
+<h1 align="center">ATLAS</h1>
+
+<p align="center"><strong>A</strong>ria <strong>T</strong>rust &amp; <strong>L</strong>ogin <strong>A</strong>uthentication <strong>S</strong>tandard</p>
+
+<p align="center">
+    A self-hosted single sign-on &amp; identity provider — one login in front of all your services.
 </p>
 
 ---
 
-[![Join Discord](https://img.shields.io/discord/809154715984199690?label=Discord&style=for-the-badge)](https://goauthentik.io/discord)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/goauthentik/authentik/ci-main.yml?branch=main&label=core%20build&style=for-the-badge)](https://github.com/goauthentik/authentik/actions/workflows/ci-main.yml)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/goauthentik/authentik/ci-outpost.yml?branch=main&label=outpost%20build&style=for-the-badge)](https://github.com/goauthentik/authentik/actions/workflows/ci-outpost.yml)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/goauthentik/authentik/ci-web.yml?branch=main&label=web%20build&style=for-the-badge)](https://github.com/goauthentik/authentik/actions/workflows/ci-web.yml)
-[![Code Coverage](https://img.shields.io/codecov/c/gh/goauthentik/authentik?style=for-the-badge)](https://codecov.io/gh/goauthentik/authentik)
-![Latest version](https://img.shields.io/docker/v/authentik/server?sort=semver&style=for-the-badge)
-[![](https://img.shields.io/badge/Help%20translate-transifex-blue?style=for-the-badge)](https://explore.transifex.com/authentik/authentik/)
+## What is ATLAS?
 
-## What is authentik?
+ATLAS is a self-hosted **Identity Provider (IdP)** for modern single sign-on. It
+speaks **OAuth2/OIDC, SAML, LDAP, RADIUS, SCIM** and forward-auth, runs entirely
+on your own infrastructure (home lab → VPS), and is themed end-to-end for the
+ARIA aesthetic — there's no third-party branding anywhere a user sees.
 
-authentik is an open-source Identity Provider (IdP) for modern SSO. It supports SAML, OAuth2/OIDC, LDAP, RADIUS, and more, designed for self-hosting from small labs to large production clusters.
+It also ships an **MCP server** so AI assistants (like Claude) can manage the
+identity system — create applications, OAuth providers and users, read the audit
+log — with per-client permission scoping and an in-app management tab.
 
-Our [enterprise offering](https://goauthentik.io/pricing) is available for organizations to securely replace existing IdPs such as Okta, Auth0, Entra ID, and Ping Identity for robust, large-scale identity management.
+## Features
 
-## Installation
+- **Protocols:** OAuth2 / OIDC, SAML 2.0, LDAP, RADIUS, SCIM, proxy / forward-auth
+- **Auth:** flows, policies, MFA (TOTP/WebAuthn), brands, federation & social login
+- **ARIA theme** across the login, admin, and user dashboards (Apple-style dark)
+- **ARIA OIDC login** integrated out of the box
+- **MCP server** + an **MCP admin tab** to see, create, scope and revoke AI-client
+  access, and audit what they did
+- **Deploy anywhere:** prebuilt images on GHCR + one-command Coolify / Docker
+  Compose deploy
 
-- Docker Compose: recommended for small/test setups. See the [documentation](https://docs.goauthentik.io/docs/install-config/install/docker-compose/).
-- Kubernetes (Helm Chart): recommended for larger setups. See the [documentation](https://docs.goauthentik.io/docs/install-config/install/kubernetes/) and the Helm chart [repository](https://github.com/goauthentik/helm).
-- AWS CloudFormation: deploy on AWS using our official templates. See the [documentation](https://docs.goauthentik.io/docs/install-config/install/aws/).
-- DigitalOcean Marketplace: one-click deployment via the official Marketplace app. See the [app listing](https://marketplace.digitalocean.com/apps/authentik).
+## Run it
 
-## Screenshots
+### Coolify (recommended)
 
-| Light                                                       | Dark                                                       |
-| ----------------------------------------------------------- | ---------------------------------------------------------- |
-| ![](https://docs.goauthentik.io/img/screen_apps_light.jpg)  | ![](https://docs.goauthentik.io/img/screen_apps_dark.jpg)  |
-| ![](https://docs.goauthentik.io/img/screen_admin_light.jpg) | ![](https://docs.goauthentik.io/img/screen_admin_dark.jpg) |
+New Resource → Docker Compose → use **`docker-compose.coolify.yml`**. Coolify
+provides the domains + TLS automatically. Full walkthrough in **[DEPLOY.md](DEPLOY.md)**.
 
-## Development and contributions
+### Docker Compose
 
-See the [Developer Documentation](https://docs.goauthentik.io/docs/developer-docs/) for information about setting up local build environments, testing your contributions, and our contribution process.
+```bash
+git clone https://github.com/itsramananshul/ATLAS.git && cd ATLAS
+cp .env.atlas.example .env.atlas      # set PG_PASS, AUTHENTIK_SECRET_KEY, MCP token/url
+docker compose --env-file .env.atlas -f docker-compose.prod.yml pull
+docker compose --env-file .env.atlas -f docker-compose.prod.yml up -d
+```
 
-When you contribute documentation, either to accompany a code change or as a standalone contribution, please be sure to follow our documentation [Style Guide](website/docs/developer-docs/docs/style-guide.mdx).
+Prebuilt images:
+`ghcr.io/itsramananshul/atlas-server` and `ghcr.io/itsramananshul/atlas-mcp`.
+First-run admin + TLS + the MCP token are covered in **[DEPLOY.md](DEPLOY.md)**.
 
-## Security
+### Build from source
 
-Please see [SECURITY.md](SECURITY.md).
+The server image is built from `lifecycle/container/Dockerfile`; the web UI lives
+in `web/` (TypeScript + Lit). To build locally:
 
-## Adoption
+```bash
+docker build -f lifecycle/container/Dockerfile -t atlas/server:dev \
+  --build-arg VERSION=dev --build-arg GIT_BUILD_HASH=$(git rev-parse --short HEAD) .
+docker compose --env-file .env.atlas -f docker-compose.atlas.yml up -d
+```
 
-Using authentik? We'd love to hear your story and feature your logo. Email us at [hello@goauthentik.io](mailto:hello@goauthentik.io) or open a GitHub Issue/PR!
+## MCP server
 
-## License
+A streamable-HTTP / stdio MCP server (`mcp-server/`) exposes ATLAS to Claude:
+manage users, groups, applications and OAuth2/OIDC providers, read the audit log,
+or call any endpoint. Full admin by default; scope it with
+`ATLAS_MCP_READONLY` / `ATLAS_MCP_ALLOW` / `ATLAS_MCP_DENY`, or limit the token's
+role. See **[mcp-server/README.md](mcp-server/README.md)**.
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey?style=for-the-badge)](website/LICENSE)
-[![authentik EE License](https://img.shields.io/badge/License-EE-orange?style=for-the-badge)](authentik/enterprise/LICENSE)
+## Built on
+
+ATLAS is built on the open-source [authentik](https://goauthentik.io) engine,
+restyled and extended for ARIA. Upstream security fixes are cherry-picked as
+needed. Licenses: [MIT](LICENSE) (core), [CC BY-SA 4.0](website/LICENSE) (docs),
+and the [Enterprise license](authentik/enterprise/LICENSE) for `enterprise/`.
