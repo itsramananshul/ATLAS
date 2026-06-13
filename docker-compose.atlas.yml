@@ -68,6 +68,24 @@ services:
       redis:
         condition: service_healthy
 
+  # MCP server — lets Claude manage ATLAS (users, apps, OAuth providers,
+  # audit log) over MCP. Streamable-HTTP transport at :9100.
+  # Set MCP_AUTHENTIK_TOKEN (+ MCP_AUTHENTIK_URL to the public URL on the
+  # VPS) in .env.atlas. Put it behind the reverse proxy / TLS in prod.
+  mcp:
+    build: ./mcp-server
+    restart: unless-stopped
+    environment:
+      AUTHENTIK_URL: ${MCP_AUTHENTIK_URL:-http://server:9000}
+      AUTHENTIK_TOKEN: ${MCP_AUTHENTIK_TOKEN}
+      MCP_TRANSPORT: http
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: "9100"
+    ports:
+      - "127.0.0.1:9100:9100"
+    depends_on:
+      - server
+
 volumes:
   database:
   redis:
