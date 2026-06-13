@@ -116,8 +116,9 @@ RUN --mount=type=bind,target=rust-toolchain.toml,src=rust-toolchain.toml \
     # Build essentials
     build-essential && \
     curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain none && \
-    rustup install && \
-    rustup default "$(sed -n 's/channel = "\(.*\)"/\1/p' rust-toolchain.toml)" && \
+    RUST_CHANNEL="$(sed -n 's/channel = "\(.*\)"/\1/p' rust-toolchain.toml | tr -d '\r')" && \
+    rustup toolchain install "$RUST_CHANNEL" --profile minimal && \
+    rustup default "$RUST_CHANNEL" && \
     rustc --version && \
     cargo --version
 
