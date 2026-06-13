@@ -14,3 +14,6 @@
 @import "#styles/locales/ja/globals.css";
 @import "#styles/locales/ko/globals.css";
 @import "#styles/locales/zh/globals.css";
+
+/* ATLAS / ARIA theme tokens (user + admin interfaces). */
+@import "#styles/atlas/aria-theme.css";

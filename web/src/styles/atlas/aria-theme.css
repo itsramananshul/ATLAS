@@ -104,9 +104,12 @@ body::before,
     background-size: cover !important;
 }
 
-/* Keep the ARIA card color in dark mode (beats authentik's dark override). */
+/* Keep the ARIA card color regardless of theme/load order (beats authentik's
+   own [data-theme] login rules, which load after this in the flow bundle). */
+:root,
 [data-theme="dark"] .pf-c-login,
 [data-theme="light"] .pf-c-login {
-    --ak-c-login__main--BackgroundColor: var(--aria-surface);
-    --ak-c-login__main--Color: var(--aria-text);
+    --ak-c-login__main--BackgroundColor: var(--aria-surface) !important;
+    --ak-c-login__main--Color: var(--aria-text) !important;
+    --ak-c-login--MaxWidth: 30rem !important;
 }

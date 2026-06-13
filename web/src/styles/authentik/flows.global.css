@@ -25,6 +25,9 @@
 @import "#elements/locale/ak-locale-select.css";
 @import "#flow/FlowExecutor.css";
 
+/* ATLAS / ARIA theme tokens (load in the real app, not just Storybook). */
+@import "#styles/atlas/aria-theme.css";
+
 /**
  * @file Static global styles for authentik.
  *
