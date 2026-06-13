@@ -2,6 +2,7 @@ import "#elements/Tabs";
 import "#elements/user/SessionList";
 import "#elements/user/UserConsentList";
 import "#elements/user/sources/SourceSettings";
+import "#user/user-settings/details/UserAvatarSettings";
 import "#user/user-settings/details/UserPassword";
 import "#user/user-settings/details/UserSettingsFlowExecutor";
 import "#user/user-settings/mfa/MFADevicesPage";
@@ -143,6 +144,9 @@ export class UserSettingsPage extends WithLicenseSummary(WithSession(AKElement))
                         class="pf-c-page__main-section pf-m-no-padding-mobile"
                     >
                         <div class="pf-l-stack pf-m-gutter">
+                            <div class="pf-l-stack__item">
+                                <ak-user-settings-avatar></ak-user-settings-avatar>
+                            </div>
                             <div class="pf-l-stack__item">
                                 <ak-user-settings-flow-executor></ak-user-settings-flow-executor>
                             </div>
