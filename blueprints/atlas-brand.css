@@ -1,0 +1,69 @@
+/* ATLAS / ARIA brand custom CSS — injected into every component shadow root.
+   Rounds the dashboard "boxes" like the login card and lets the black
+   background show through the page chrome. */
+
+/* Cards / panels → rounded glass */
+.pf-c-card,
+.pf-c-content-card {
+    border-radius: 20px !important;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Page chrome transparent so the black body shows through */
+.pf-c-page,
+.pf-c-page__main,
+.pf-c-page__main-section,
+.pf-c-page__sidebar,
+.pf-c-page__sidebar-body,
+.pf-c-page__header,
+.pf-c-drawer,
+.pf-c-drawer__content,
+.pf-c-drawer__panel-main {
+    background: transparent !important;
+}
+.pf-c-page__sidebar {
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.pf-c-page__header {
+    border-block-end: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Navigation items → rounded */
+.pf-c-nav__link {
+    border-radius: 12px !important;
+    margin-inline: 6px;
+}
+
+/* Tabs → pill */
+.pf-c-tabs__link {
+    border-radius: 999px !important;
+}
+
+/* Buttons → rounded (matches the login's rounded actions) */
+.pf-c-button {
+    border-radius: 12px !important;
+}
+
+/* Inputs → pill, like the login */
+.pf-c-form-control {
+    border-radius: 999px !important;
+}
+
+/* Tables sit transparent on the black surface */
+.pf-c-table,
+.pf-c-table > tbody,
+.pf-c-table > thead,
+.pf-c-table tr {
+    background: transparent !important;
+}
+
+/* Modals, dropdowns, menus → rounded */
+.pf-c-modal-box,
+.pf-c-dropdown__menu,
+.pf-c-menu,
+.pf-c-select__menu,
+.pf-c-tooltip__content {
+    border-radius: 16px !important;
+    overflow: hidden;
+}
