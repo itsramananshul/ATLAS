@@ -48,10 +48,6 @@
     --pf-global--Color--100: var(--aria-text);
     --pf-global--Color--200: var(--aria-text-muted);
     --pf-global--Color--light-100: var(--aria-text);
-    --pf-global--link--Color: var(--aria-accent-2);
-    --pf-global--link--Color--hover: var(--aria-accent);
-    --pf-global--primary-color--100: var(--aria-accent);
-    --pf-global--primary-color--200: var(--aria-accent-2);
     --pf-global--BorderColor--100: var(--aria-border);
     /* #endregion */
 
@@ -72,12 +68,10 @@
     --pf-c-form-control--FontSize: 0.95rem;
     /* #endregion */
 
-    /* #region Primary button — large, highly rounded, focal */
+    /* #region Primary button shape (login uses white via styles/authentik/atlas.css;
+       do NOT set primary background/hover here — it leaks globally and makes
+       dashboard buttons go white-on-white on hover). */
     --pf-c-button--BorderRadius: 999px;
-    --pf-c-button--m-primary--BackgroundColor: var(--aria-accent);
-    --pf-c-button--m-primary--hover--BackgroundColor: var(--aria-accent-2);
-    --pf-c-button--m-primary--active--BackgroundColor: var(--aria-accent-2);
-    --pf-c-button--m-primary--focus--BackgroundColor: var(--aria-accent-2);
     --pf-c-button--PaddingTop: 0.95rem;
     --pf-c-button--PaddingBottom: 0.95rem;
     --pf-c-button--PaddingLeft: 1.5rem;

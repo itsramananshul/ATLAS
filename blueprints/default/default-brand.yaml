@@ -80,6 +80,16 @@ entries:
               border-radius: 12px !important;
           }
 
+          /* Secondary / link buttons: keep the label light on the dark hover fill so it
+             never washes out to invisible. */
+          .pf-c-button.pf-m-secondary:hover,
+          .pf-c-button.pf-m-secondary:focus,
+          .pf-c-button.pf-m-tertiary:hover,
+          .pf-c-button.pf-m-link:hover {
+              background-color: rgba(255, 255, 255, 0.12) !important;
+              color: #ffffff !important;
+          }
+
           /* ---- Toolbars: transparent containers, rounded search & bars ---- */
           .pf-c-toolbar,
           .pf-c-toolbar__content,

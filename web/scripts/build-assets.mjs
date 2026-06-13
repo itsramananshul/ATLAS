@@ -25,8 +25,9 @@ const assets = [
     [path.resolve(PackageRoot, "src", "assets", "images"), "./assets/images"],
     [require.resolve("@goauthentik/brand-assets/brand.png"), "./assets/icons/brand.png"],
     [require.resolve("@goauthentik/brand-assets/brand.svg"), "./assets/icons/brand.svg"],
-    [require.resolve("@goauthentik/brand-assets/icon.png"), "./assets/icons/icon.png"],
-    [require.resolve("@goauthentik/brand-assets/icon.svg"), "./assets/icons/icon.svg"],
+    // ATLAS / ARIA favicon (repo-local).
+    [path.resolve(PackageRoot, "src", "assets", "icons", "icon.png"), "./assets/icons/icon.png"],
+    [path.resolve(PackageRoot, "src", "assets", "icons", "icon.svg"), "./assets/icons/icon.svg"],
     // ATLAS / ARIA brand lockup (repo-local, replaces authentik's icon_left_brand).
     [
         path.resolve(PackageRoot, "src", "assets", "icons", "icon_left_brand.png"),
