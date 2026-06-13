@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/microsoft_entra/user
     model: authentik_providers_microsoft_entra.microsoftentraprovidermapping
     attrs:
-      name: "authentik default Microsoft Entra Mapping: User"
+      name: "ARIA default Microsoft Entra Mapping: User"
       expression: |
         # Field reference: (note that keys have to converted to snake_case)
         # https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0
@@ -35,7 +35,7 @@ entries:
       managed: goauthentik.io/providers/microsoft_entra/group
     model: authentik_providers_microsoft_entra.microsoftentraprovidermapping
     attrs:
-      name: "authentik default Microsoft Entra Mapping: Group"
+      name: "ARIA default Microsoft Entra Mapping: Group"
       expression: |
         # Field reference: (note that keys have to converted to snake_case)
         # https://learn.microsoft.com/en-us/graph/api/group-post-groups?view=graph-rest-1.0&tabs=http#request-body

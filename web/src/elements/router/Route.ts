@@ -26,7 +26,7 @@ export class Route {
 
     redirect(to: string, raw = false): Route {
         this.callback = async () => {
-            console.debug(`authentik/router: redirecting ${to}`);
+            console.debug(`ARIA/router: redirecting ${to}`);
             if (!raw) {
                 window.location.hash = `#${to}`;
             } else {

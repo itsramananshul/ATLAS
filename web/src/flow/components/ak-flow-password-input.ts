@@ -198,14 +198,14 @@ export class InputPassword extends AKElement {
             if (!input) return;
 
             if (isActiveElement(input, document.activeElement)) {
-                console.debug("authentik/stages/password: cleared focus observer");
+                console.debug("ARIA/stages/password: cleared focus observer");
                 clearInterval(this.inputFocusIntervalID);
             }
 
             input.focus();
         }, 10);
 
-        console.debug("authentik/stages/password: started focus observer");
+        console.debug("ARIA/stages/password: started focus observer");
     }
 
     connectedCallback() {

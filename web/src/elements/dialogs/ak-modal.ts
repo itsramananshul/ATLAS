@@ -346,7 +346,7 @@ export class AKModal extends AKElement implements TransclusionParentElement {
                 parentElement: dialogElement,
             });
             throw new TypeError(
-                `authentik/modal: ${localName} must be placed inside a <dialog> element.`,
+                `ARIA/modal: ${localName} must be placed inside a <dialog> element.`,
             );
         }
 

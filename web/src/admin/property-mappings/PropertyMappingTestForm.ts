@@ -139,7 +139,7 @@ export class PropertyMappingTestForm extends Form<PropertyMappingTestRequest> {
                         user: this.request?.user || 0,
                         context: {
                             ldap: {
-                                displayName: "authentik test user",
+                                displayName: "ARIA test user",
                                 distinguishedName: "cn=user,ou=users,dc=goauthentik,dc=io",
                                 givenName: "test",
                                 name: "test-user",

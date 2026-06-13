@@ -4,7 +4,7 @@ version: 1
 entries:
   - model: authentik_rbac.role
     identifiers:
-      name: authentik Read-only
+      name: ARIA Read-only
     id: role
     attrs:
       permissions: !Enumerate [
@@ -18,7 +18,7 @@ entries:
       ]
   - model: authentik_core.group
     identifiers:
-      name: authentik Read-only
+      name: ARIA Read-only
     attrs:
       roles:
         - !KeyOf role

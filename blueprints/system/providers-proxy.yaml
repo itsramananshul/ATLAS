@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/proxy/scope-proxy
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: Proxy outpost"
+      name: "ARIA default OAuth Mapping: Proxy outpost"
       scope_name: ak_proxy
       description: authentik Proxy - User information
       expression: |

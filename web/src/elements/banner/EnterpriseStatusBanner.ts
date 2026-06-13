@@ -62,7 +62,7 @@ export class EnterpriseStatusBanner extends WithLicenseSummary(AKElement) {
                 break;
             case LicenseSummaryStatusEnum.ReadOnly:
                 message = msg(
-                    "Caution: This authentik instance has entered read-only mode due to expired/exceeded licenses.",
+                    "Caution: This ARIA instance has entered read-only mode due to expired/exceeded licenses.",
                 );
                 break;
             default:

@@ -17,7 +17,7 @@ export interface PlexResource {
 export const DEFAULT_HEADERS = {
     "Accept": "application/json",
     "Content-Type": "application/json",
-    "X-Plex-Product": "authentik",
+    "X-Plex-Product": "ARIA",
     "X-Plex-Version": import.meta.env.AK_VERSION,
     "X-Plex-Device-Vendor": "goauthentik.io",
 };
@@ -79,7 +79,7 @@ export class PlexAPIClient {
             throw new SentryIgnoredError("Invalid response code");
         }
         const pin: PlexPinResponse = await pinResponse.json();
-        console.debug("authentik/plex: polling Pin");
+        console.debug("ARIA/plex: polling Pin");
         return pin.authToken;
     }
 
@@ -106,7 +106,7 @@ export class PlexAPIClient {
 
     async getServers(): Promise<PlexResource[]> {
         const resourcesResponse = await fetch(
-            `https://plex.tv/api/v2/resources?X-Plex-Token=${this.token}&X-Plex-Client-Identifier=authentik`,
+            `https://plex.tv/api/v2/resources?X-Plex-Token=${this.token}&X-Plex-Client-Identifier=ARIA`,
             {
                 headers: DEFAULT_HEADERS,
             },

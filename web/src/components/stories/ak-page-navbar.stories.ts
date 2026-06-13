@@ -17,7 +17,7 @@ const metadata: Meta<AKPageNavbar> = {
     parameters: {
         docs: {
             description: {
-                component: "A page navbar for the authentik web interface",
+                component: "A page navbar for the ARIA web interface",
             },
         },
     },

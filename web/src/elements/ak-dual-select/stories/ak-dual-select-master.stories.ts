@@ -55,7 +55,7 @@ const metadata: Meta<AkDualSelect> = {
         },
         pages: {
             type: "string",
-            description: "An authentik pagination object.",
+            description: "An ARIA pagination object.",
         },
     },
 };

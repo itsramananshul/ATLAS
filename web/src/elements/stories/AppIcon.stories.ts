@@ -21,12 +21,12 @@ const metadata: Meta<AppIcon> = {
                 component: /* md */ `
 # Application Icon
 
-AppIcon displays an icon associated with an authentik application on the Application Dashboard page. It takes
+AppIcon displays an icon associated with an ARIA application on the Application Dashboard page. It takes
 an API "Application" object and a size, with a default size of "medium."
 
 ## Usage
 
-Note that the variables passed in are how they are used in authentik. Any string and any FontAwesome
+Note that the variables passed in are how they are used in ARIA. Any string and any FontAwesome
 icon supported by the current theme can be referenced.
 
 \`\`\`Typescript

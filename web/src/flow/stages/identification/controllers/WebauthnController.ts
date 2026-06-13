@@ -77,7 +77,7 @@ export class WebauthnController implements ReactiveController {
         // Check if browser supports conditional mediation
         const isAvailable = await isConditionalMediationAvailable();
         if (!isAvailable) {
-            console.debug("authentik/identification: Conditional mediation not available");
+            console.debug("ARIA/identification: Conditional mediation not available");
             return;
         }
 
@@ -97,7 +97,7 @@ export class WebauthnController implements ReactiveController {
             })) as PublicKeyCredential | null;
 
             if (!credential) {
-                console.debug("authentik/identification: No credential returned");
+                console.debug("ARIA/identification: No credential returned");
                 return;
             }
 
@@ -107,10 +107,10 @@ export class WebauthnController implements ReactiveController {
         } catch (error) {
             if (error instanceof Error && error.name === "AbortError") {
                 // Request was aborted, this is expected when navigating away
-                console.debug("authentik/identification: Conditional WebAuthn aborted");
+                console.debug("ARIA/identification: Conditional WebAuthn aborted");
                 return;
             }
-            console.warn("authentik/identification: Conditional WebAuthn failed", error);
+            console.warn("ARIA/identification: Conditional WebAuthn failed", error);
         }
     }
 }

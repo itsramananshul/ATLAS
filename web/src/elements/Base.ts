@@ -23,7 +23,7 @@ import { property } from "lit/decorators.js";
 const $PFBase = createStyleSheetUnsafe(PFBase);
 
 /**
- * authentik base styles, providing overrides to Patternfly's initial definitions,
+ * ARIA base styles, providing overrides to Patternfly's initial definitions,
  * and additional customizations.
  */
 const $AKBase = createStyleSheetUnsafe(AKBase);
@@ -215,7 +215,7 @@ export class AKElement extends LitElement implements AKElementProps {
      *
      * @remarks
      * The use of injected style sheets may result in brittle styles that are hard to
-     * maintain across authentik versions.
+     * maintain across ARIA versions.
      *
      */
     readonly #customCSSStyleSheet: CSSStyleSheet | null;

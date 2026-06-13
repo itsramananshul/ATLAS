@@ -69,7 +69,7 @@ It has two named slots, both optional:
             >
                 <div style="padding: 20px;">
                     <h3>Content Behind Overlay</h3>
-                    <p>authentik is awesome (or will be if something were actually loading)</p>
+                    <p>ARIA is awesome (or will be if something were actually loading)</p>
                     <button>Sample Button</button>
                 </div>
                 ${story()}

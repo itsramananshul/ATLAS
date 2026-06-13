@@ -22,7 +22,7 @@ const samples = sampleData.map(({ produce, seasons }) => ({
 samples.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 
 // All we need is a promise to return our dataset. It doesn't have to be a class-based method a'la
-// the authentik API.
+// the ARIA API.
 
 const getSamples = (query = "") => {
     if (query === "") {

@@ -12,7 +12,7 @@ export const dummyCryptoCertsSearch = {
     results: [
         {
             pk: "63efd1b8-6c39-4f65-8157-9a406cb37447",
-            name: "authentik Self-signed Certificate",
+            name: "ARIA Self-signed Certificate",
             fingerprint_sha256: null,
             fingerprint_sha1: null,
             cert_expiry: null,

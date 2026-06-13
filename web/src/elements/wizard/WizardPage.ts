@@ -49,7 +49,7 @@ export abstract class WizardPage<S = WizardPageState> extends AKElement {
      * @abstract
      */
     public reset(): void | Promise<void> {
-        console.debug(`authentik/wizard ${this.localName}: reset)`);
+        console.debug(`ARIA/wizard ${this.localName}: reset)`);
     }
 
     /**

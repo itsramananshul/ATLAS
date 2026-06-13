@@ -28,7 +28,7 @@ import { customElement } from "lit/decorators.js";
 export class SourceListPage extends TablePage<Source> {
     public override pageTitle = msg("Federation and Social login");
     public override pageDescription = msg(
-        "Sources of identities, which can either be synced into authentik's database, or can be used by users to authenticate and enroll themselves.",
+        "Sources of identities, which can either be synced into ARIA's database, or can be used by users to authenticate and enroll themselves.",
     );
     public override pageIcon = "pf-icon pf-icon-middleware";
     protected override searchEnabled = true;

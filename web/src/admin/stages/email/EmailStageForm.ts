@@ -109,7 +109,7 @@ export class EmailStageForm extends BaseStageForm<EmailStage> {
                 >
                     <input
                         type="text"
-                        value="${ifDefined(this.instance?.fromAddress || "system@authentik.local")}"
+                        value="${ifDefined(this.instance?.fromAddress || "system@ARIA.local")}"
                         class="pf-c-form-control"
                         required
                     />
@@ -173,7 +173,7 @@ export class EmailStageForm extends BaseStageForm<EmailStage> {
                     <ak-form-element-horizontal label=${msg("Subject")} required name="subject">
                         <input
                             type="text"
-                            value="${this.instance?.subject ?? "authentik"}"
+                            value="${this.instance?.subject ?? "ARIA"}"
                             class="pf-c-form-control"
                             required
                         />

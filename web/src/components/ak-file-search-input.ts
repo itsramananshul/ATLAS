@@ -31,7 +31,7 @@ const renderValue = (item?: FileItem | null) => item?.name;
 /**
  * File Search Input Component
  *
- * Search/select dropdown for files from authentik.admin.files storage.
+ * Search/select dropdown for files from ARIA.admin.files storage.
  * Supports uploaded files, static files, and external URLs/Font Awesome icons via PassthroughBackend.
  */
 @customElement("ak-file-search-input")

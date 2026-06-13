@@ -138,7 +138,7 @@ let pendingRedirect = false;
  */
 export function redirectToAuthFlow(nextPathname = "/flows/-/default/authentication/"): void {
     if (pendingRedirect) {
-        console.debug("authentik/users: Redirect already pending, ");
+        console.debug("ARIA/users: Redirect already pending, ");
         return;
     }
 
@@ -151,7 +151,7 @@ export function redirectToAuthFlow(nextPathname = "/flows/-/default/authenticati
     pendingRedirect = true;
 
     console.debug(
-        `authentik/users: Redirecting to authentication flow at ${authFlowRedirectURL.href}`,
+        `ARIA/users: Redirecting to authentication flow at ${authFlowRedirectURL.href}`,
     );
 
     window.location.assign(authFlowRedirectURL);
@@ -190,7 +190,7 @@ export async function me(requestInit?: RequestInit): Promise<SessionUser> {
                 }
             }
 
-            console.debug("authentik/users: Failed to retrieve user session", error);
+            console.debug("ARIA/users: Failed to retrieve user session", error);
 
             return createGuestSession();
         });

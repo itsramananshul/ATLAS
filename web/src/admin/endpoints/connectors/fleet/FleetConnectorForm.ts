@@ -75,7 +75,7 @@ export class FleetConnectorForm extends ModelForm<FleetConnector, string> {
                         label=${msg("Map users")}
                         ?checked=${this.instance?.mapUsers ?? true}
                         help=${msg(
-                            "When enabled, users detected by Fleet will be mapped in authentik, granting them access to the device.",
+                            "When enabled, users detected by Fleet will be mapped in ARIA, granting them access to the device.",
                         )}
                     ></ak-switch-input>
                     <ak-switch-input

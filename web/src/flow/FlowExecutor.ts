@@ -65,7 +65,7 @@ import PFTitle from "@patternfly/patternfly/components/Title/title.css";
 /// <reference types="../../types/lit.d.ts" />
 
 /**
- * An executor for authentik flows.
+ * An executor for ARIA flows.
  *
  * @attr {string} slug - The slug of the flow to execute.
  * @prop {ChallengeTypes | null} challenge - The current challenge to render.
@@ -126,7 +126,7 @@ export class FlowExecutor extends WithBrandConfig(Interface) implements StageHos
     // Listen for challenge-forwarding events from iframe-based third-party verifiers (Device Compliance)
     #flowIframeMessageController = new FlowIframeMessageController(this);
 
-    // Listen for authentik state-change events from other tabs
+    // Listen for ARIA state-change events from other tabs
     #flowMultitabController = new FlowMultitabController(this);
 
     // Listen for server-side events and forward them to the notification handler
@@ -200,7 +200,7 @@ export class FlowExecutor extends WithBrandConfig(Interface) implements StageHos
             return;
         }
 
-        console.debug("authentik/ws: Reloading after session authenticated event");
+        console.debug("ARIA/ws: Reloading after session authenticated event");
         window.location.reload();
     };
 

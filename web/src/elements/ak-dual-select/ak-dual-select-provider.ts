@@ -16,11 +16,11 @@ import { createRef, ref } from "lit/directives/ref.js";
 /**
  * @element ak-dual-select-provider
  *
- * A top-level component that understands how the authentik pagination interface works,
+ * A top-level component that understands how the ARIA pagination interface works,
  * and can provide new pages based upon navigation requests.  This is the interface
- * between authentik and the generic ak-dual-select component; aside from knowing that
+ * between ARIA and the generic ak-dual-select component; aside from knowing that
  * the Pagination object "looks like Django," the interior components don't know anything
- * about authentik at all and could be dropped into Gravity unchanged.)
+ * about ARIA at all and could be dropped into Gravity unchanged.)
  */
 @customElement("ak-dual-select-provider")
 export class AkDualSelectProvider extends CustomListenerElement(AKControlElement) {

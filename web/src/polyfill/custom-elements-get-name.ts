@@ -5,7 +5,7 @@
  * constructor, it returns the tag name it was registered under (or `null`).
  * It landed in Chrome/Edge 117, Firefox 119, and Safari 17.4 — so iOS 16, the
  * iOS 17.0–17.3 series, and any WebKit WebView pinned below 17.4 reach the
- * authentik flow renderer without it and crash at the first call site.
+ * ARIA flow renderer without it and crash at the first call site.
  *
  * The polyfill keeps a reverse map by wrapping `define()` so that any later
  * registration is recorded; on browsers that already implement `getName()`

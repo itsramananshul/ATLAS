@@ -40,7 +40,7 @@ const slugify = (s: string) => kebabCase(s, { suffixCharacters: "-" });
 export class AkSlugInput extends HorizontalLightComponent<string> {
     /**
      * A selector indicating the source text input control. Must be unique within the whole DOM
-     * context of the slug and source controls. The most common use in authentik is the default:
+     * context of the slug and source controls. The most common use in ARIA is the default:
      * slugifying the "name" of something.
      */
     @property({ type: String })

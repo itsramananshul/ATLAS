@@ -50,6 +50,6 @@ export const EVENT_REFRESH_ENTERPRISE = "ak-refresh-enterprise";
 
 //#region LocalStorage
 
-export const LOCALSTORAGE_AUTHENTIK_KEY = "authentik-local-settings";
+export const LOCALSTORAGE_AUTHENTIK_KEY = "ARIA-local-settings";
 
 //#endregion

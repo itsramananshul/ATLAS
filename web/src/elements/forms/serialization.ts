@@ -113,7 +113,7 @@ export function serializeForm<T = Record<string, unknown>>(elements: Iterable<AK
             return assignValue(inputElement, inputElement.value, json);
         }
 
-        console.error(`authentik/forms: Could not find value for element`, {
+        console.error(`ARIA/forms: Could not find value for element`, {
             element,
             inputElement,
             json,

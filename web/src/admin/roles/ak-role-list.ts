@@ -31,7 +31,7 @@ export class RoleListPage extends TablePage<Role> {
     public override searchPlaceholder = msg("Search for a role...");
     public override pageTitle = msg("Roles");
     public override pageDescription = msg(
-        "Manage roles which grant permissions to objects within authentik.",
+        "Manage roles which grant permissions to objects within ARIA.",
     );
     public override pageIcon = "fa fa-lock";
 

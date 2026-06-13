@@ -26,7 +26,7 @@ export class ConnectorsListPage extends TablePage<Connector> {
     public override pageIcon = "pf-icon pf-icon-data-source";
     public override pageTitle = msg("Connectors");
     public override pageDescription = msg(
-        "Configure how devices connect with authentik and ingest external device data.",
+        "Configure how devices connect with ARIA and ingest external device data.",
     );
 
     protected override searchEnabled: boolean = true;

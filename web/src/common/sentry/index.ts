@@ -21,8 +21,8 @@ import { type Integration } from "@sentry/core";
  */
 export class SentryIgnoredError extends Error {}
 
-export const TAG_SENTRY_COMPONENT = "authentik.component";
-export const TAG_SENTRY_CAPABILITIES = "authentik.capabilities";
+export const TAG_SENTRY_COMPONENT = "ARIA.component";
+export const TAG_SENTRY_CAPABILITIES = "ARIA.capabilities";
 
 function beforeSend(
     event: ErrorEvent,
@@ -88,7 +88,7 @@ export function configureSentry(): void {
         ],
         release:
             process.env.NODE_ENV === "production"
-                ? `authentik@${import.meta.env.AK_VERSION}`
+                ? `ARIA@${import.meta.env.AK_VERSION}`
                 : undefined,
         integrations,
         tracePropagationTargets: [window.location.origin],

@@ -19,7 +19,7 @@ import {
 import { LOCALE_STATUS_EVENT, LocaleStatusEventDetail } from "@lit/localize";
 import { html } from "lit";
 
-export const CSRFHeaderName = "X-authentik-CSRF";
+export const CSRFHeaderName = "X-ARIA-CSRF";
 export const AcceptLanguage = "Accept-Language";
 
 export class LoggingMiddleware implements Middleware {
@@ -27,7 +27,7 @@ export class LoggingMiddleware implements Middleware {
 
     constructor(brand: CurrentBrand) {
         const prefix =
-            brand.matchedDomain && brand.matchedDomain !== "authentik-default"
+            brand.matchedDomain && brand.matchedDomain !== "ARIA-default"
                 ? `api/${brand.matchedDomain}`
                 : "api";
         this.#logger = ConsoleLogger.prefix(prefix);

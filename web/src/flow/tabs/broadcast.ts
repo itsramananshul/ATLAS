@@ -2,7 +2,7 @@ import { TabID } from "#flow/tabs/TabID";
 
 import { ConsoleLogger, Logger } from "#logger/browser";
 
-export const BROADCAST_CHANNEL_NAME = "authentik";
+export const BROADCAST_CHANNEL_NAME = "ARIA";
 
 enum BroadcastMessageType {
     discover = "discover",

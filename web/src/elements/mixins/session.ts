@@ -23,7 +23,7 @@ export const kAKSessionContext = Symbol("kAKSessionContext");
  * @see {@linkcode WithSession}
  */
 export const SessionContext = createContext<APIResult<SessionUser>>(
-    Symbol("authentik-session-context"),
+    Symbol("ARIA-session-context"),
 );
 
 export type SessionContext = typeof SessionContext;
@@ -35,7 +35,7 @@ export type SessionContext = typeof SessionContext;
  * @see {@linkcode WithSession}
  */
 export const UIConfigContext = createContext<Readonly<UIConfig>>(
-    Symbol("authentik-ui-config-context"),
+    Symbol("ARIA-ui-config-context"),
 );
 
 export type UIConfigContext = typeof UIConfigContext;

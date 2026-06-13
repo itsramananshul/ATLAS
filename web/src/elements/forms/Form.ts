@@ -598,7 +598,7 @@ export class Form<T = Record<string, unknown>, D = T>
                             this.nonFieldErrors = pluckFallbackFieldErrors(parsedError);
 
                             this.logger.error(
-                                "API rejected the form submission due to an invalid field that doesn't appear to be in the form. This is likely a bug in authentik.",
+                                "API rejected the form submission due to an invalid field that doesn't appear to be in the form. This is likely a bug in ARIA.",
                                 parsedError,
                             );
                         }

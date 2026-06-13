@@ -174,7 +174,7 @@ export class ApplicationWizardApplicationStep extends ApplicationWizardStep {
                             .errorMessages=${errors.metaLaunchUrl ??
                             this.errorMessages("metaLaunchUrl")}
                             help=${msg(
-                                "If left empty, authentik will try to extract the launch URL based on the selected provider.",
+                                "If left empty, ARIA will try to extract the launch URL based on the selected provider.",
                             )}
                             input-hint="code"
                         ></ak-text-input>

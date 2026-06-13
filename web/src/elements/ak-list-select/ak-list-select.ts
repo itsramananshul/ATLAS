@@ -22,7 +22,7 @@ export interface IListSelect {
  * @class ListSelect
  * @element ak-list-select
  *
- * authentik scrolling list select element
+ * ARIA scrolling list select element
  *
  * Provides a menu of elements to be used for selection.
  *

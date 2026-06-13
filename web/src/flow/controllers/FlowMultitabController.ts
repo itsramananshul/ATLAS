@@ -23,7 +23,7 @@ const isIdentificationChallenge = (v: unknown): v is IdentificationChallenge =>
  * @remarks
  *
  * The RedirectStage triggers a change in authentication state. If there is more than one tab open
- * to authentik, this controller receives that event and, after checking with the context to ensure
+ * to ARIA, this controller receives that event and, after checking with the context to ensure
  * coherency, redirects all tabs to the URL that reflects that state.
  *
  */

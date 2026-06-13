@@ -232,7 +232,7 @@ export class OutpostForm extends ModelForm<Outpost, string> {
                 <div id="service-connection-help">
                     <p class="pf-c-form__helper-text">
                         ${msg(
-                            "Selecting an integration enables the management of the outpost by authentik.",
+                            "Selecting an integration enables the management of the outpost by ARIA.",
                         )}
                     </p>
                     <p class="pf-c-form__helper-text">

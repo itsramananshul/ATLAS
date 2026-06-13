@@ -21,7 +21,7 @@ const metadata: Meta<AkPagination> = {
     argTypes: {
         pages: {
             type: "string",
-            description: "An authentik Pagination struct",
+            description: "An ARIA Pagination struct",
         },
     },
 };

@@ -157,7 +157,7 @@ export class OutpostViewPage extends AKElement {
             ${(this.outpost?.config.authentik_host ?? "") === ""
                 ? html`<div slot="header" class="pf-c-banner pf-m-warning">
                       ${msg(
-                          "Warning: authentik Domain is not configured, authentication will not work.",
+                          "Warning: ARIA Domain is not configured, authentication will not work.",
                       )}
                   </div>`
                 : null}
@@ -246,7 +246,7 @@ export class OutpostViewPage extends AKElement {
                     </div>
                     <h3>
                         ${msg(
-                            "If your authentik Instance is using a self-signed certificate, set this value.",
+                            "If your ARIA Instance is using a self-signed certificate, set this value.",
                         )}
                     </h3>
                     <div class="pf-c-form__group">

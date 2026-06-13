@@ -80,7 +80,7 @@ export class WebsocketClient extends WebSocket implements Disposable {
         try {
             return new WebsocketClient(wsURL);
         } catch (error) {
-            console.warn(`authentik/ws: failed to connect to ws ${error}`);
+            console.warn(`ARIA/ws: failed to connect to ws ${error}`);
             return null;
         }
     }

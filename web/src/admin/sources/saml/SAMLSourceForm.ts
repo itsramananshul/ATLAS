@@ -80,7 +80,7 @@ export class SAMLSourceForm extends BaseSourceForm<SAMLSource> {
                 label=${msg("Verify Assertion Signature")}
                 ?checked=${this.instance?.signedAssertion ?? true}
                 help=${msg(
-                    "When enabled, authentik will look for a Signature inside of the Assertion element.",
+                    "When enabled, ARIA will look for a Signature inside of the Assertion element.",
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -88,7 +88,7 @@ export class SAMLSourceForm extends BaseSourceForm<SAMLSource> {
                 label=${msg("Verify Response Signature")}
                 ?checked=${this.instance?.signedResponse ?? false}
                 help=${msg(
-                    "When enabled, authentik will look for a Signature inside of the Response element.",
+                    "When enabled, ARIA will look for a Signature inside of the Response element.",
                 )}
             ></ak-switch-input>`;
     }

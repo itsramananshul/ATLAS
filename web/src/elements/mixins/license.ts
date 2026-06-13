@@ -4,7 +4,7 @@ import { type LicenseSummary, LicenseSummaryStatusEnum } from "@goauthentik/api"
 
 import { consume, Context, createContext } from "@lit/context";
 
-export const LicenseContext = createContext<LicenseSummary>(Symbol("authentik-license-context"));
+export const LicenseContext = createContext<LicenseSummary>(Symbol("ARIA-license-context"));
 
 export type LicenseContext = Context<symbol, LicenseSummary>;
 

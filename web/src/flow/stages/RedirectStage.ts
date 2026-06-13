@@ -75,7 +75,7 @@ export class RedirectStage extends BaseStage<RedirectChallenge, FlowChallengeRes
 
     async redirect() {
         console.debug(
-            "authentik/stages/redirect: redirecting to url from server",
+            "ARIA/stages/redirect: redirecting to url from server",
             this.challenge?.to,
         );
 

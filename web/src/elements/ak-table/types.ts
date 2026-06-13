@@ -4,7 +4,7 @@ import { SlottedTemplateResult } from "#elements/types";
 
 import { TemplateResult } from "lit";
 
-// authentik's standard tables (ak-simple-table, ak-select-table) all take a variety of types, the
+// ARIA's standard tables (ak-simple-table, ak-select-table) all take a variety of types, the
 // simplest of which is just an array of tuples, one for each column, along with an tuple for
 // the definition of the column itself.
 //

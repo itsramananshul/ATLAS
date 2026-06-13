@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/scim/user
     model: authentik_providers_scim.scimmapping
     attrs:
-      name: "authentik default SCIM Mapping: User"
+      name: "ARIA default SCIM Mapping: User"
       expression: |
         # Some implementations require givenName and familyName to be set
         givenName, familyName = request.user.name, " "
@@ -55,7 +55,7 @@ entries:
       managed: goauthentik.io/providers/scim/group
     model: authentik_providers_scim.scimmapping
     attrs:
-      name: "authentik default SCIM Mapping: Group"
+      name: "ARIA default SCIM Mapping: Group"
       expression: |
         return {
             "displayName": group.name,

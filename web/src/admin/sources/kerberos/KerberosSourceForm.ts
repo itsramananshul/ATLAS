@@ -119,7 +119,7 @@ export class KerberosSourceForm extends BaseSourceForm<KerberosSource> {
                 ?checked=${this.instance?.passwordLoginUpdateInternalPassword ?? false}
                 label=${msg("Update internal password on login")}
                 help=${msg(
-                    "When the user logs in to authentik using this source password backend, update their credentials in authentik.",
+                    "When the user logs in to ARIA using this source password backend, update their credentials in ARIA.",
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -132,7 +132,7 @@ export class KerberosSourceForm extends BaseSourceForm<KerberosSource> {
                 ?checked=${this.instance?.syncUsersPassword ?? true}
                 label=${msg("User password writeback")}
                 help=${msg(
-                    "Enable this option to write password changes made in authentik back to Kerberos. Ignored if sync is disabled.",
+                    "Enable this option to write password changes made in ARIA back to Kerberos. Ignored if sync is disabled.",
                 )}
             ></ak-switch-input>
             <ak-form-group open label="${msg("Realm settings")}">

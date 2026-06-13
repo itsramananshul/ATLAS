@@ -25,11 +25,11 @@ export class SessionEnd extends BaseStage<SessionEndChallenge, unknown> {
     getText(challenge: SessionEndChallenge) {
         if (challenge.overviewUrl && challenge.invalidationFlowUrl) {
             return msg(
-                str`You've logged out of ${challenge.applicationName}. You can go back to the overview to launch another application, or log out of your authentik account.`,
+                str`You've logged out of ${challenge.applicationName}. You can go back to the overview to launch another application, or log out of your ARIA account.`,
             );
         } else if (challenge.invalidationFlowUrl) {
             return msg(
-                str`You've logged out of ${challenge.applicationName}. You can log out of your authentik account.`,
+                str`You've logged out of ${challenge.applicationName}. You can log out of your ARIA account.`,
             );
         }
         return msg(str`You've logged out of ${challenge.applicationName}.`);

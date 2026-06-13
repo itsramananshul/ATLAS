@@ -77,7 +77,7 @@ export class AgentConnectorSetup extends AKElement {
                 <div class="pf-l-grid__item pf-m-12-col">
                     <p>
                         ${msg(
-                            "Next, download the configuration to deploy the authentik Agent via MDM",
+                            "Next, download the configuration to deploy the ARIA Agent via MDM",
                         )}
                     </p>
                 </div>

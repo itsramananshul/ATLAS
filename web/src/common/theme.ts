@@ -160,7 +160,7 @@ export function createUIThemeEffect(
 
         if (themeChoice && themeChoice !== "auto") {
             console.debug(
-                `authentik/theme (document): skipping media query change due to explicit choice (${themeChoice})`,
+                `ARIA/theme (document): skipping media query change due to explicit choice (${themeChoice})`,
             );
             return;
         }
@@ -261,13 +261,13 @@ export const applyDocumentTheme = ((
     currentUITheme = resolveUITheme(),
     ownerDocument = document,
 ): void => {
-    console.debug(`authentik/theme (document): want to switch to ${currentUITheme} theme`);
+    console.debug(`ARIA/theme (document): want to switch to ${currentUITheme} theme`);
 
     const { themeChoice } = ownerDocument.documentElement.dataset;
 
     if (themeChoice && themeChoice !== "auto") {
         console.debug(
-            `authentik/theme (document): skipping theme application due to explicit choice (${themeChoice})`,
+            `ARIA/theme (document): skipping theme application due to explicit choice (${themeChoice})`,
         );
 
         ownerDocument.dispatchEvent(new ThemeChangeEvent(themeChoice));
@@ -277,7 +277,7 @@ export const applyDocumentTheme = ((
 
     ownerDocument.documentElement.dataset.theme = currentUITheme;
 
-    console.debug(`authentik/theme (document): switching to ${currentUITheme} theme`);
+    console.debug(`ARIA/theme (document): switching to ${currentUITheme} theme`);
 
     ownerDocument.dispatchEvent(new ThemeChangeEvent(currentUITheme));
 }) satisfies UIThemeListener;

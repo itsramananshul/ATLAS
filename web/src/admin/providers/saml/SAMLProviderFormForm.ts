@@ -96,7 +96,7 @@ function renderHasSlsUrl(
             .options=${serviceProviderBindingOptions}
             .value=${provider?.slsBinding ?? SAMLBindingsEnum.Redirect}
             help=${msg(
-                "Determines how authentik sends the logout response back to the Service Provider.",
+                "Determines how ARIA sends the logout response back to the Service Provider.",
             )}
             @change=${setSlsBinding}
         >
@@ -418,7 +418,7 @@ export function renderForm({
                     value="${ifDefined(provider.issuerOverride ?? undefined)}"
                     .errorMessages=${errors.issuerOverride}
                     help=${msg(
-                        "Sets a custom EntityID/Issuer to override the authentik generated default.",
+                        "Sets a custom EntityID/Issuer to override the ARIA generated default.",
                     )}
                 ></ak-text-input>
                 <ak-radio-input
@@ -427,7 +427,7 @@ export function renderForm({
                     .options=${serviceProviderBindingOptions}
                     .value=${provider.spBinding ?? SAMLBindingsEnum.Post}
                     help=${msg(
-                        "Determines how authentik sends the response back to the Service Provider.",
+                        "Determines how ARIA sends the response back to the Service Provider.",
                     )}
                 ></ak-radio-input>
                 <ak-form-element-horizontal

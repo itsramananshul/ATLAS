@@ -135,13 +135,13 @@ export class RacInterface extends WithBrandConfig(Interface) {
         this.tunnel = new Guacamole.WebSocketTunnel(wsUrl);
         this.tunnel.receiveTimeout = 10 * 1000; // 10 seconds
         this.tunnel.onerror = (status) => {
-            console.debug("authentik/rac: tunnel error: ", status);
+            console.debug("ARIA/rac: tunnel error: ", status);
             this.reconnect();
         };
         this.client = new Guacamole.Client(this.tunnel);
         this.client.onerror = (err) => {
             this.clientStatus = err;
-            console.debug("authentik/rac: error: ", err);
+            console.debug("ARIA/rac: error: ", err);
             this.reconnect();
         };
         this.client.onstatechange = (state) => {
@@ -167,7 +167,7 @@ export class RacInterface extends WithBrandConfig(Interface) {
                     // clipboard, breaking subsequent paste attempts. Ignore
                     // them so the local clipboard remains intact.
                     if (!trimmed) {
-                        console.debug("authentik/rac: ignored empty remote clipboard payload");
+                        console.debug("ARIA/rac: ignored empty remote clipboard payload");
                         return;
                     }
                     this._previousClipboardValue = trimmed;
@@ -186,7 +186,7 @@ export class RacInterface extends WithBrandConfig(Interface) {
                     writeToClipboard(item);
                 };
             }
-            console.debug("authentik/rac: updated clipboard from remote");
+            console.debug("ARIA/rac: updated clipboard from remote");
         };
         const params = new URLSearchParams();
         params.set("screen_width", Math.floor(RacInterface.domSize().width).toString());
@@ -236,7 +236,7 @@ export class RacInterface extends WithBrandConfig(Interface) {
     }
 
     onConnected(): void {
-        console.debug("authentik/rac: connected");
+        console.debug("ARIA/rac: connected");
         if (!this.client) {
             return;
         }
@@ -306,7 +306,7 @@ export class RacInterface extends WithBrandConfig(Interface) {
             }
             const newValue = await navigator.clipboard.readText();
             if (newValue !== this._previousClipboardValue) {
-                console.debug(`authentik/rac: new clipboard value: ${newValue}`);
+                console.debug(`ARIA/rac: new clipboard value: ${newValue}`);
                 this._previousClipboardValue = newValue;
                 this.writeClipboard(newValue);
             }
@@ -316,7 +316,7 @@ export class RacInterface extends WithBrandConfig(Interface) {
             if (ex instanceof DOMException) {
                 return;
             }
-            console.warn("authentik/rac: error reading clipboard", ex);
+            console.warn("ARIA/rac: error reading clipboard", ex);
         }
     }
 
@@ -328,7 +328,7 @@ export class RacInterface extends WithBrandConfig(Interface) {
         const writer = new Guacamole.StringWriter(stream);
         writer.sendText(value);
         writer.sendEnd();
-        console.debug("authentik/rac: Sent clipboard");
+        console.debug("ARIA/rac: Sent clipboard");
     }
 
     renderOverlay() {

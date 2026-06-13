@@ -108,7 +108,7 @@ export class AuthenticatorDuoStageForm extends BaseStageForm<AuthenticatorDuoSta
             <ak-form-group
                 label=${msg("Duo Admin API (optional)")}
                 description="${msg(
-                    `When using a Duo MFA, Access or Beyond plan, an Admin API application can be created. This will allow authentik to import devices automatically.`,
+                    `When using a Duo MFA, Access or Beyond plan, an Admin API application can be created. This will allow ARIA to import devices automatically.`,
                 )}"
             >
                 <div class="pf-c-form">

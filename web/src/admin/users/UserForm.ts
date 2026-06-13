@@ -218,7 +218,7 @@ export class UserForm extends ModelForm<User, number> {
                                         value: UserTypeEnum.InternalServiceAccount,
                                         disabled: true,
                                         description: html`${msg(
-                                            "Managed by authentik and cannot be assigned manually.",
+                                            "Managed by ARIA and cannot be assigned manually.",
                                         )}`,
                                     },
                                 ]

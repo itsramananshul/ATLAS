@@ -222,7 +222,7 @@ export function renderForm({ provider, errors, update }: SCIMProviderFormProps) 
                         },
                     ]}
                     help=${msg(
-                        "Alter authentik's behavior for vendor-specific SCIM implementations.",
+                        "Alter ARIA's behavior for vendor-specific SCIM implementations.",
                     )}
                 ></ak-radio-input>
                 <ak-text-input

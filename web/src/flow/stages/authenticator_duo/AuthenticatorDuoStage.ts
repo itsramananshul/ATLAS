@@ -52,7 +52,7 @@ export class AuthenticatorDuoStage extends BaseStage<
             stageUuid: this.challenge?.stageUuid || "",
         });
         console.debug(
-            `authentik/stages/authenticator_duo: Enrollment status: ${status.duoResponse}`,
+            `ARIA/stages/authenticator_duo: Enrollment status: ${status.duoResponse}`,
         );
         switch (status.duoResponse) {
             case DuoResponseEnum.Success:

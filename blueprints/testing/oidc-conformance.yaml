@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-address
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: OpenID 'address'"
+      name: "ARIA default OAuth Mapping: OpenID 'address'"
       scope_name: address
       description: "General Address Information"
       expression: |
@@ -21,7 +21,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-phone
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: OpenID 'phone'"
+      name: "ARIA default OAuth Mapping: OpenID 'phone'"
       scope_name: phone
       description: "General phone information"
       expression: |

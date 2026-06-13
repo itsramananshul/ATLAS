@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/sources/kerberos/user/default/multipart-principals-as-service-accounts
     model: authentik_sources_kerberos.kerberossourcepropertymapping
     attrs:
-      name: "authentik default Kerberos User Mapping: Multipart principals as service accounts"
+      name: "ARIA default Kerberos User Mapping: Multipart principals as service accounts"
       expression: |
         from authentik.core.models import USER_PATH_SERVICE_ACCOUNT, UserTypes
 
@@ -25,7 +25,7 @@ entries:
       managed: goauthentik.io/sources/kerberos/user/default/ignore-other-realms
     model: authentik_sources_kerberos.kerberossourcepropertymapping
     attrs:
-      name: "authentik default Kerberos User Mapping: Ignore other realms"
+      name: "ARIA default Kerberos User Mapping: Ignore other realms"
       expression: |
         localpart, realm = principal.rsplit("@", 1)
         if realm.upper() != source.realm.upper():
@@ -35,7 +35,7 @@ entries:
       managed: goauthentik.io/sources/kerberos/user/default/ignore-system-principals
     model: authentik_sources_kerberos.kerberossourcepropertymapping
     attrs:
-      name: "authentik default Kerberos User Mapping: Ignore system principals"
+      name: "ARIA default Kerberos User Mapping: Ignore system principals"
       expression: |
         localpart, realm = principal.rsplit("@", 1)
         denied_prefixes = ["kadmin/", "krbtgt/", "K/M", "WELLKNOWN/", "kiprop/", "changepw/"]
@@ -47,7 +47,7 @@ entries:
       managed: goauthentik.io/sources/kerberos/user/realm-as-group
     model: authentik_sources_kerberos.kerberossourcepropertymapping
     attrs:
-      name: "authentik default Kerberos User Mapping: Add realm as group"
+      name: "ARIA default Kerberos User Mapping: Add realm as group"
       expression: |
         localpart, realm = principal.rsplit("@", 1)
         return {

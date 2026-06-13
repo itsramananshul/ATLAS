@@ -167,7 +167,7 @@ export function StrictUnsafe<T extends string>(
         }
 
         if (!tagName.startsWith(AKElementTagPrefix)) {
-            throw new TypeError(`Custom element ${tagName} is not an authentik element`);
+            throw new TypeError(`Custom element ${tagName} is not an ARIA element`);
         }
 
         const ElementConstructor = customElements.get(tagName);
@@ -177,7 +177,7 @@ export function StrictUnsafe<T extends string>(
         }
 
         if (!isAKElementConstructor(ElementConstructor)) {
-            throw new TypeError(`Custom element ${tagName} is not an authentik element`);
+            throw new TypeError(`Custom element ${tagName} is not an ARIA element`);
         }
 
         const filteredProps = mapElementProps(ElementConstructor, props);

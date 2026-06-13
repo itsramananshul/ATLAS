@@ -155,7 +155,7 @@ export function createCommonCommands(): PaletteCommandDefinitionInit<unknown>[] 
         },
         {
             label: msg("About ARIA", {
-                id: "command-palette.about-authentik",
+                id: "command-palette.about-ARIA",
             }),
             action: AboutModal.open,
             prefix: msg("View", { id: "command-palette.prefix.view" }),

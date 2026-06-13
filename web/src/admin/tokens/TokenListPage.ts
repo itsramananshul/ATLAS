@@ -30,7 +30,7 @@ export class TokenListPage extends TablePage<Token> {
     protected override searchEnabled = true;
     public override pageTitle = msg("Tokens");
     public override pageDescription = msg(
-        "Tokens are used throughout authentik for Email validation stages, Recovery keys and API access.",
+        "Tokens are used throughout ARIA for Email validation stages, Recovery keys and API access.",
     );
     public override pageIcon = "pf-icon pf-icon-security";
     public override searchPlaceholder = msg("Search for a token identifier, user, or intent...");

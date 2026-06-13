@@ -69,7 +69,7 @@ function setDialogCountAttribute(delta: number, ownerDocument: Document = docume
  * dialogs, which are shown using the `showModal()` method and block interaction with the rest of the page,
  * and __non-modal__ dialogs, which are shown using the `show()` method and allow interaction with the rest of the page.
  *
- * For almost all use cases in authentik, dialogs are modal. However, {@linkcode AKModal}
+ * For almost all use cases in ARIA, dialogs are modal. However, {@linkcode AKModal}
  * (and its implementors) are what a developer would typically consider to be the modal itself.
  *
  * Here be dragons! The delination between "dialog" and "modal" is not based on

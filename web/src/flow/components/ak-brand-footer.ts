@@ -12,7 +12,7 @@ import { map } from "lit/directives/map.js";
 
 /**
  * @part list - The list element containing the links
- * @part list-item - Each item in the list, including the "Powered by authentik" item
+ * @part list-item - Each item in the list, including the "Powered by ARIA" item
  * @part list-item-link - The link element for each item, if applicable
  */
 @customElement("ak-brand-links")

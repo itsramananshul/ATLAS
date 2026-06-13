@@ -5,7 +5,7 @@ import { TabID } from "#flow/tabs/TabID";
 
 import { ConsoleLogger } from "#logger/browser";
 
-const lockKey = "authentik-tab-locked";
+const lockKey = "ARIA-tab-locked";
 const logger = ConsoleLogger.prefix("mtab/orchestrate");
 
 const TAB_EXIT_TIMEOUT_MS = 3000;

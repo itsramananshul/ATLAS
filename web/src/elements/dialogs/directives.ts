@@ -163,7 +163,7 @@ export function lookupElementConstructor<T extends CustomElementConstructor>(
     if (!tagName) {
         // eslint-disable-next-line no-console
         console.trace(
-            "No tag name provided for lookup. Did this value come from a different version of authentik?",
+            "No tag name provided for lookup. Did this value come from a different version of ARIA?",
         );
 
         return ElementConstructorBoundary as unknown as T;

@@ -6,14 +6,14 @@ import { consume, createContext } from "@lit/context";
 import { property } from "lit/decorators.js";
 
 /**
- * The Lit context for authentik's version.
+ * The Lit context for ARIA's version.
  *
  * @category Context
  * @see {@linkcode VersionMixin}
  * @see {@linkcode WithVersion}
  */
 
-export const VersionContext = createContext<Version | null>(Symbol("authentik-version-context"));
+export const VersionContext = createContext<Version | null>(Symbol("ARIA-version-context"));
 
 export type VersionContext = typeof VersionContext;
 
@@ -32,7 +32,7 @@ export interface VersionMixin {
 }
 
 /**
- * A mixin that provides the current authentik version to the element.
+ * A mixin that provides the current ARIA version to the element.
  *
  * @category Mixin
  */

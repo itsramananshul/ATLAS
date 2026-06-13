@@ -12,7 +12,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
  *
  * @returns {TrustedHTML} All HTML content, escaped.
  */
-export const EscapeTrustPolicy = trustedTypes.createPolicy("authentik-escape", {
+export const EscapeTrustPolicy = trustedTypes.createPolicy("ARIA-escape", {
     createHTML: (untrustedHTML: string) => {
         return DOMPurify.sanitize(untrustedHTML, {
             RETURN_TRUSTED_TYPE: false,
@@ -26,7 +26,7 @@ export const EscapeTrustPolicy = trustedTypes.createPolicy("authentik-escape", {
  *
  * @returns {TrustedHTML} All remaining text content.
  */
-export const StripHTMLTrustPolicy = trustedTypes.createPolicy("authentik-strip-html", {
+export const StripHTMLTrustPolicy = trustedTypes.createPolicy("ARIA-strip-html", {
     createHTML: (untrustedHTML: string) => {
         return DOMPurify.sanitize(untrustedHTML, {
             RETURN_TRUSTED_TYPE: false,
@@ -41,7 +41,7 @@ export const StripHTMLTrustPolicy = trustedTypes.createPolicy("authentik-strip-h
  *
  * @returns {TrustedHTML} Text content only, all HTML tags stripped.
  */
-export const SanitizedTrustPolicy = trustedTypes.createPolicy("authentik-sanitize", {
+export const SanitizedTrustPolicy = trustedTypes.createPolicy("ARIA-sanitize", {
     createHTML: (untrustedHTML: string) => {
         return DOMPurify.sanitize(untrustedHTML, {
             RETURN_TRUSTED_TYPE: false,
@@ -54,7 +54,7 @@ export const SanitizedTrustPolicy = trustedTypes.createPolicy("authentik-sanitiz
  * Trusted types policy, allowing a minimal set of _safe_ HTML tags supplied by
  * a trusted source, such as the brand API.
  */
-export const BrandedHTMLPolicy = trustedTypes.createPolicy("authentik-restrict", {
+export const BrandedHTMLPolicy = trustedTypes.createPolicy("ARIA-restrict", {
     createHTML: (untrustedHTML: string) => {
         return DOMPurify.sanitize(untrustedHTML, {
             RETURN_TRUSTED_TYPE: false,

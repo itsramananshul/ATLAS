@@ -4,8 +4,8 @@ metadata:
 entries:
 - attrs:
     designation: authentication
-    name: Welcome to authentik!
-    title: Welcome to authentik!
+    name: Welcome to ARIA!
+    title: Welcome to ARIA!
     authentication: require_unauthenticated
   identifiers:
     slug: default-source-authentication

@@ -225,7 +225,7 @@ export class CaptchaStageForm extends BaseStageForm<CaptchaStage> {
                 ?revealed=${!this.instance}
                 placeholder=${msg("Paste your CAPTCHA secret key...")}
                 help=${msg(
-                    "The secret key allows communication between authentik and the CAPTCHA provider to validate user responses.",
+                    "The secret key allows communication between ARIA and the CAPTCHA provider to validate user responses.",
                     {
                         id: "captcha.secret-key.description",
                         desc: "Description for CAPTCHA secret key field.",

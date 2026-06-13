@@ -53,7 +53,7 @@ export class ApplicationWizardProviderStep extends ApplicationWizardStep {
         if (!providerForm) {
             // TODO: This needs to be removed once all steps can report their validity.
             console.debug(
-                "authentik/wizard: Form not found within provider step",
+                "ARIA/wizard: Form not found within provider step",
                 this,
                 this.element,
             );

@@ -140,7 +140,7 @@ export class BrandForm extends ModelForm<Brand, string> {
                     <ak-text-input
                         required
                         name="brandingTitle"
-                        placeholder="authentik"
+                        placeholder="ARIA"
                         value=${brandingTitle}
                         label=${msg("Title")}
                         autocomplete="off"

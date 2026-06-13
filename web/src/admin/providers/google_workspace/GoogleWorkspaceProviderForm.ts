@@ -92,7 +92,7 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                         />
                         <p class="pf-c-form__helper-text">
                             ${msg(
-                                "Email address of the user the actions of authentik will be delegated to.",
+                                "Email address of the user the actions of ARIA will be delegated to.",
                             )}
                         </p>
                     </ak-form-element-horizontal>
@@ -128,7 +128,7 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                                 label: msg("Suspend"),
                                 value: OutgoingSyncDeleteAction.Suspend,
                                 description: html`${msg(
-                                    "User is suspended, and connection to user in authentik is removed.",
+                                    "User is suspended, and connection to user in ARIA is removed.",
                                 )}`,
                             },
                             {

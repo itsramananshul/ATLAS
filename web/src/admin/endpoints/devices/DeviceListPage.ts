@@ -104,7 +104,7 @@ export class DeviceListPage extends TablePage<EndpointDevice> {
                         icon="fa fa-laptop"
                         label=${msg("Unreachable devices")}
                         subtext=${msg(
-                            "Devices that authentik hasn't received information about in 24h.",
+                            "Devices that ARIA hasn't received information about in 24h.",
                         )}
                     >
                         ${this.summary?.unreachableCount ?? "-"}

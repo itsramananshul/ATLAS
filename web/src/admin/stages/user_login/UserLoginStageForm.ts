@@ -113,7 +113,7 @@ export class UserLoginStageForm extends BaseStageForm<UserLoginStage> {
                         />
                         <p class="pf-c-form__helper-text">
                             ${msg(
-                                "If set to a duration above 0, a cookie will be stored for the duration specified which will allow authentik to know if the user is signing in from a new device.",
+                                "If set to a duration above 0, a cookie will be stored for the duration specified which will allow ARIA to know if the user is signing in from a new device.",
                             )}
                         </p>
                         <ak-utils-time-delta-help></ak-utils-time-delta-help>

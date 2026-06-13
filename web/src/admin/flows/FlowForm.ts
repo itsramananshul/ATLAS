@@ -161,7 +161,7 @@ export class FlowForm extends WithCapabilitiesConfig(ModelForm<Flow, string>) {
                 </select>
                 <p class="pf-c-form__helper-text">
                     ${msg(
-                        "Decides what this Flow is used for. For example, the Authentication flow is redirect to when an un-authenticated user visits authentik.",
+                        "Decides what this Flow is used for. For example, the Authentication flow is redirect to when an un-authenticated user visits ARIA.",
                     )}
                 </p>
             </ak-form-element-horizontal>

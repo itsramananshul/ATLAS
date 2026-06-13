@@ -32,7 +32,7 @@ export type NotificationsContextValue = APIResult<Readonly<PaginatedNotification
  * @see {@linkcode WithSession}
  */
 export const NotificationsContext = createContext<NotificationsContextValue>(
-    Symbol("authentik-notifications-context"),
+    Symbol("ARIA-notifications-context"),
 );
 
 export type NotificationsContext = typeof NotificationsContext;
@@ -74,7 +74,7 @@ export interface NotificationsMixin {
 }
 
 /**
- * A mixin that provides the current authentik version to the element.
+ * A mixin that provides the current ARIA version to the element.
  *
  * @category Mixin
  */

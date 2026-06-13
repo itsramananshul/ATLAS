@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/rac/rdp-default
     model: authentik_providers_rac.racpropertymapping
     attrs:
-      name: "authentik default RAC Mapping: RDP Default settings"
+      name: "ARIA default RAC Mapping: RDP Default settings"
       static_settings:
         resize-method: "display-update"
         enable-wallpaper: "true"
@@ -17,7 +17,7 @@ entries:
       managed: goauthentik.io/providers/rac/rdp-high-fidelity
     model: authentik_providers_rac.racpropertymapping
     attrs:
-      name: "authentik default RAC Mapping: RDP High Fidelity"
+      name: "ARIA default RAC Mapping: RDP High Fidelity"
       static_settings:
         enable-theming: "true"
         enable-full-window-drag: "true"
@@ -29,6 +29,6 @@ entries:
       managed: goauthentik.io/providers/rac/ssh-default
     model: authentik_providers_rac.racpropertymapping
     attrs:
-      name: "authentik default RAC Mapping: SSH Default settings"
+      name: "ARIA default RAC Mapping: SSH Default settings"
       static_settings:
         terminal-type: "xterm-256color"

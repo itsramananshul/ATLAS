@@ -43,7 +43,7 @@ export class PropertyMappingListPage extends TablePage<PropertyMapping> {
     protected override searchEnabled = true;
     public override pageTitle = msg("Property Mappings");
     public override pageDescription = msg(
-        "Control how authentik exposes and interprets information.",
+        "Control how ARIA exposes and interprets information.",
     );
     public override pageIcon = "pf-icon pf-icon-blueprint";
     public override searchPlaceholder = msg("Search for a property mapping by name or type...");

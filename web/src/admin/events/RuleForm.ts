@@ -126,7 +126,7 @@ export class RuleForm extends ModelForm<NotificationRule, string> {
                 ></ak-dual-select-dynamic-selected>
                 <p class="pf-c-form__helper-text">
                     ${msg(
-                        "Select which transports should be used to notify the user. If none are selected, the notification will only be shown in the authentik UI.",
+                        "Select which transports should be used to notify the user. If none are selected, the notification will only be shown in the ARIA UI.",
                     )}
                 </p>
             </ak-form-element-horizontal>

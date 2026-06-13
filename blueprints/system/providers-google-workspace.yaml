@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/google_workspace/user
     model: authentik_providers_google_workspace.googleworkspaceprovidermapping
     attrs:
-      name: "authentik default Google Workspace Mapping: User"
+      name: "ARIA default Google Workspace Mapping: User"
       expression: |
         # Field reference:
         # https://developers.google.com/admin-sdk/directory/reference/rest/v1/users#User
@@ -37,7 +37,7 @@ entries:
       managed: goauthentik.io/providers/google_workspace/group
     model: authentik_providers_google_workspace.googleworkspaceprovidermapping
     attrs:
-      name: "authentik default Google Workspace Mapping: Group"
+      name: "ARIA default Google Workspace Mapping: Group"
       expression: |
         # Field reference:
         # https://developers.google.com/admin-sdk/directory/reference/rest/v1/groups#Group

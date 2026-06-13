@@ -105,7 +105,7 @@ export class LDAPSourceForm extends BaseSourceForm<LDAPSource> {
                 label=${msg("Update internal password on login")}
                 ?checked=${this.instance?.passwordLoginUpdateInternalPassword ?? false}
                 help=${msg(
-                    "When the user logs in to authentik using this source password backend, update their credentials in authentik.",
+                    "When the user logs in to ARIA using this source password backend, update their credentials in ARIA.",
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -118,7 +118,7 @@ export class LDAPSourceForm extends BaseSourceForm<LDAPSource> {
                 label=${msg("User password writeback")}
                 ?checked=${this.instance?.syncUsersPassword ?? true}
                 help=${msg(
-                    "Login password is synced from LDAP into authentik automatically. Enable this option only to write password changes in authentik back to LDAP.",
+                    "Login password is synced from LDAP into ARIA automatically. Enable this option only to write password changes in ARIA back to LDAP.",
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -131,7 +131,7 @@ export class LDAPSourceForm extends BaseSourceForm<LDAPSource> {
                 label=${msg("Delete Not Found Objects")}
                 ?checked=${this.instance?.deleteNotFoundObjects ?? false}
                 help=${msg(
-                    "Delete authentik users and groups which were previously supplied by this source, but are now missing from it.",
+                    "Delete ARIA users and groups which were previously supplied by this source, but are now missing from it.",
                 )}
             ></ak-switch-input>
             <ak-form-group open label="${msg("Connection settings")}">

@@ -169,7 +169,7 @@ function renderForwardDomainSettings(
             required
             .errorMessages=${errors.externalHost}
             help=${msg(
-                "The external URL you'll authenticate at. The authentik core server should be reachable under this URL.",
+                "The external URL you'll authenticate at. The ARIA core server should be reachable under this URL.",
             )}
         ></ak-text-input>
 
@@ -300,7 +300,7 @@ ${provider.skipPathRegex}</textarea
                     label=${msg("Intercept header authentication")}
                     ?checked=${provider.interceptHeaderAuth ?? true}
                     help=${msg(
-                        "When enabled, authentik will intercept the Authorization header to authenticate the request.",
+                        "When enabled, ARIA will intercept the Authorization header to authenticate the request.",
                     )}
                 >
                 </ak-switch-input>
@@ -310,7 +310,7 @@ ${provider.skipPathRegex}</textarea
                     label=${msg("Send HTTP-Basic Authentication")}
                     ?checked=${provider.basicAuthEnabled ?? false}
                     help=${msg(
-                        "Send a custom HTTP-Basic Authentication header based on values from authentik.",
+                        "Send a custom HTTP-Basic Authentication header based on values from ARIA.",
                     )}
                     @change=${onSetShowHttpBasic}
                 >

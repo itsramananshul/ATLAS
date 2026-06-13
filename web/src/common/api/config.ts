@@ -54,5 +54,5 @@ export function AndNext(url: string): string {
 }
 
 console.debug(
-    `authentik(early): version ${import.meta.env.AK_VERSION}, apiBase ${DEFAULT_CONFIG.basePath}`,
+    `ARIA(early): version ${import.meta.env.AK_VERSION}, apiBase ${DEFAULT_CONFIG.basePath}`,
 );

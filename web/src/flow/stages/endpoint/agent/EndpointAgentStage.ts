@@ -30,7 +30,7 @@ export class EndpointAgentStage extends BaseStage<
     #timeout: ReturnType<typeof setTimeout> | null = null;
 
     #messageHandler = (ev: MessageEvent<BrowserExtensionData>) => {
-        if (ev.data._ak_ext !== "authentik-platform-sso") {
+        if (ev.data._ak_ext !== "ARIA-platform-sso") {
             return;
         }
         if (!ev.data.response) {
@@ -67,7 +67,7 @@ export class EndpointAgentStage extends BaseStage<
                 return;
             }
             window.postMessage({
-                _ak_ext: "authentik-platform-sso",
+                _ak_ext: "ARIA-platform-sso",
                 challenge: this.challenge.challenge,
             });
             const delaySeconds = this.challenge?.challengeIdleTimeout ?? 3;

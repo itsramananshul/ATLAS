@@ -12,8 +12,8 @@ import { css, html, ReactiveController } from "lit";
 import { createRef, Ref } from "lit-html/directives/ref.js";
 
 export class RememberMeStorage {
-    static readonly user = StorageAccessor.local("authentik-remember-me-user");
-    static readonly session = StorageAccessor.local("authentik-remember-me-session");
+    static readonly user = StorageAccessor.local("ARIA-remember-me-user");
+    static readonly session = StorageAccessor.local("ARIA-remember-me-session");
     static reset = () => {
         this.user.delete();
         this.session.delete();
@@ -214,7 +214,7 @@ export class RememberMeController implements ReactiveController {
     public renderToggleInput = () => {
         return html`<label
             class="pf-c-switch remember-me-switch"
-            for="authentik-remember-me"
+            for="ARIA-remember-me"
             aria-description=${msg(
                 "When enabled, your username will be remembered on this device for future logins.",
             )}
@@ -222,7 +222,7 @@ export class RememberMeController implements ReactiveController {
             <input
                 class="pf-c-switch__input"
                 type="checkbox"
-                id="authentik-remember-me"
+                id="ARIA-remember-me"
                 @change=${this.toggleChangeListener}
                 ?checked=${this.defaultChecked}
             />

@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/sources/ldap/default-dn-path
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default LDAP Mapping: DN to User Path"
+      name: "ARIA default LDAP Mapping: DN to User Path"
       expression: |
         path_elements = []
         for pair in dn.split(","):
@@ -29,7 +29,7 @@ entries:
       managed: goauthentik.io/sources/ldap/default-name
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default LDAP Mapping: Name"
+      name: "ARIA default LDAP Mapping: Name"
       expression: |
         return {
             "name": ldap.get("name"),
@@ -38,7 +38,7 @@ entries:
       managed: goauthentik.io/sources/ldap/default-mail
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default LDAP Mapping: mail"
+      name: "ARIA default LDAP Mapping: mail"
       expression: |
         return {
             "email": ldap.get("mail"),
@@ -48,7 +48,7 @@ entries:
       managed: goauthentik.io/sources/ldap/ms-samaccountname
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default Active Directory Mapping: sAMAccountName"
+      name: "ARIA default Active Directory Mapping: sAMAccountName"
       expression: |
         return {
             "username": ldap.get("sAMAccountName"),
@@ -57,7 +57,7 @@ entries:
       managed: goauthentik.io/sources/ldap/ms-userprincipalname
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default Active Directory Mapping: userPrincipalName"
+      name: "ARIA default Active Directory Mapping: userPrincipalName"
       object_field: "attributes.upn"
       expression: |
         return {
@@ -69,7 +69,7 @@ entries:
       managed: goauthentik.io/sources/ldap/ms-givenName
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default Active Directory Mapping: givenName"
+      name: "ARIA default Active Directory Mapping: givenName"
       expression: |
         return {
             "attributes": {
@@ -80,7 +80,7 @@ entries:
       managed: goauthentik.io/sources/ldap/ms-sn
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default Active Directory Mapping: sn"
+      name: "ARIA default Active Directory Mapping: sn"
       expression: |
         return {
             "attributes": {
@@ -92,7 +92,7 @@ entries:
       managed: goauthentik.io/sources/ldap/openldap-uid
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default OpenLDAP Mapping: uid"
+      name: "ARIA default OpenLDAP Mapping: uid"
       expression: |
         return {
             "username": ldap.get("uid"),
@@ -101,7 +101,7 @@ entries:
       managed: goauthentik.io/sources/ldap/openldap-cn
     model: authentik_sources_ldap.ldapsourcepropertymapping
     attrs:
-      name: "authentik default OpenLDAP Mapping: cn"
+      name: "ARIA default OpenLDAP Mapping: cn"
       expression: |
         return {
             "name": ldap.get("cn"),

@@ -10,7 +10,7 @@ entries:
     model: authentik_flows.flow
     attrs:
       name: Default enrollment Flow
-      title: Welcome to authentik!
+      title: Welcome to ARIA!
       designation: enrollment
       authentication: require_unauthenticated
   - identifiers:

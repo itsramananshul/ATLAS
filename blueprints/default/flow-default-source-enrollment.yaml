@@ -4,8 +4,8 @@ metadata:
 entries:
 - attrs:
     designation: enrollment
-    name: Welcome to authentik! Please select a username.
-    title: Welcome to authentik! Please select a username.
+    name: Welcome to ARIA! Please select a username.
+    title: Welcome to ARIA! Please select a username.
     authentication: none
   identifiers:
     slug: default-source-enrollment

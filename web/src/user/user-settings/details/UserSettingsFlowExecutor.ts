@@ -135,7 +135,7 @@ export class UserSettingsFlowExecutor
     }
 
     #performSessionChallenge = () => {
-        console.debug("authentik/user/flows: redirect to '/', restarting flow.");
+        console.debug("ARIA/user/flows: redirect to '/', restarting flow.");
 
         return this.nextChallenge().then(() => {
             showMessage({
@@ -173,7 +173,7 @@ export class UserSettingsFlowExecutor
                 return html`<ak-empty-state default-label></ak-empty-state>`;
             default:
                 console.debug(
-                    `authentik/user/flows: unsupported stage type ${this.challenge.component}`,
+                    `ARIA/user/flows: unsupported stage type ${this.challenge.component}`,
                 );
                 return html`
                     <a

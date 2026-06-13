@@ -8,7 +8,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-openid
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: OpenID 'openid'"
+      name: "ARIA default OAuth Mapping: OpenID 'openid'"
       scope_name: openid
       expression: |
         # This scope is required by the OpenID-spec, and must as such exist in authentik.
@@ -18,7 +18,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-email
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: OpenID 'email'"
+      name: "ARIA default OAuth Mapping: OpenID 'email'"
       scope_name: email
       description: "Email address"
       expression: |
@@ -30,7 +30,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-profile
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: OpenID 'profile'"
+      name: "ARIA default OAuth Mapping: OpenID 'profile'"
       scope_name: profile
       description: "General Profile Information"
       expression: |
@@ -48,7 +48,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-entitlements
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: Application Entitlements"
+      name: "ARIA default OAuth Mapping: Application Entitlements"
       scope_name: entitlements
       description: "Application entitlements"
       expression: |
@@ -61,7 +61,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-offline_access
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: OpenID 'offline_access'"
+      name: "ARIA default OAuth Mapping: OpenID 'offline_access'"
       scope_name: offline_access
       description: "Access to request new tokens without interaction"
       expression: |
@@ -72,7 +72,7 @@ entries:
       managed: goauthentik.io/providers/oauth2/scope-authentik_api
     model: authentik_providers_oauth2.scopemapping
     attrs:
-      name: "authentik default OAuth Mapping: authentik API access"
+      name: "ARIA default OAuth Mapping: ARIA API access"
       scope_name: goauthentik.io/api
       description: "authentik API Access on behalf of your user"
       expression: |

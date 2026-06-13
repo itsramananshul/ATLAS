@@ -32,7 +32,7 @@ export class OutpostListPage extends TablePage<Outpost> {
     );
     public override pageTitle = msg("Outposts");
     public override pageDescription = msg(
-        "Outposts are deployments of authentik components to support different environments and protocols, like reverse proxies.",
+        "Outposts are deployments of ARIA components to support different environments and protocols, like reverse proxies.",
     );
 
     public override pageIcon = "pf-icon pf-icon-zone";
@@ -93,7 +93,7 @@ export class OutpostListPage extends TablePage<Outpost> {
                 ${(item.config.authentik_host ?? "") === ""
                     ? html`<ak-label color=${PFColor.Orange} compact>
                           ${msg(
-                              "Warning: authentik Domain is not configured, authentication will not work.",
+                              "Warning: ARIA Domain is not configured, authentication will not work.",
                           )}
                       </ak-label>`
                     : html`<ak-label color=${PFColor.Green} compact>

@@ -24,7 +24,7 @@ entries:
   id: group
   state: created
   identifiers:
-    name: authentik Admins
+    name: ARIA Admins
 
 - model: authentik_policies_event_matcher.eventmatcherpolicy
   id: default-match-configuration-error

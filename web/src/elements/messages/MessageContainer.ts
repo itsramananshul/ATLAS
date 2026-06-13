@@ -34,7 +34,7 @@ export function showMessage(message: APIMessage | null, unique: boolean = false)
     }
 
     if (!message.message.trim()) {
-        logger.warn("authentik/messages: `showMessage` received an empty message", message);
+        logger.warn("ARIA/messages: `showMessage` received an empty message", message);
 
         message.message = msg("An unknown error occurred");
         message.description ??= msg("Please check the browser console for more details.");
@@ -45,8 +45,8 @@ export function showMessage(message: APIMessage | null, unique: boolean = false)
     const container = topmost.querySelector<MessageContainer>("ak-message-container");
 
     if (!container) {
-        logger.warn("authentik/messages: No message container found in DOM");
-        logger.info("authentik/messages: Message to show:", message);
+        logger.warn("ARIA/messages: No message container found in DOM");
+        logger.info("ARIA/messages: Message to show:", message);
 
         return false;
     }

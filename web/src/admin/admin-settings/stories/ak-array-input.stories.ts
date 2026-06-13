@@ -77,8 +77,8 @@ export default metadata;
 type Story = StoryObj;
 
 const items: FooterLink[] = [
-    { name: "authentik", href: "https://goauthentik.io" },
-    { name: "authentik docs", href: "https://docs.goauthentik.io/docs/" },
+    { name: "ARIA", href: "https://goauthentik.io" },
+    { name: "ARIA docs", href: "https://docs.goauthentik.io/docs/" },
 ];
 
 export const Default: Story = {

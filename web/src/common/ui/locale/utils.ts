@@ -123,7 +123,7 @@ export function findSupportedLocale(candidates: string[]): TargetLanguageTag | n
 
 //#region Persistence
 
-const sessionLocaleKey = "authentik:locale";
+const sessionLocaleKey = "ARIA:locale";
 
 /**
  * Persist the given locale code to sessionStorage.
@@ -137,7 +137,7 @@ export function setSessionLocale(languageTag: TargetLanguageTag | null): void {
 
         sessionStorage?.setItem?.(sessionLocaleKey, languageTag);
     } catch (error) {
-        console.debug("authentik/locale: Unable to persist locale to sessionStorage", error);
+        console.debug("ARIA/locale: Unable to persist locale to sessionStorage", error);
     }
 }
 
@@ -148,7 +148,7 @@ export function getSessionLocale(): string | null {
     try {
         return sessionStorage?.getItem?.(sessionLocaleKey) || null;
     } catch (error) {
-        console.debug("authentik/locale: Unable to read locale from sessionStorage", error);
+        console.debug("ARIA/locale: Unable to read locale from sessionStorage", error);
     }
 
     return null;
@@ -213,7 +213,7 @@ export function autoDetectLanguage(
     const firstSupportedLocale = findSupportedLocale(candidates);
 
     if (!firstSupportedLocale) {
-        console.debug(`authentik/locale: Falling back to source locale`, {
+        console.debug(`ARIA/locale: Falling back to source locale`, {
             SourceLanguageTag,
             languageTagHint,
             fallbackLanguageTag,

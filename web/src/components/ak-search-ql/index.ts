@@ -26,7 +26,7 @@ export class QL extends DjangoQL {
         return;
     }
     logError(message: string): void {
-        console.warn(`authentik/ql: ${message}`);
+        console.warn(`ARIA/ql: ${message}`);
     }
     textareaResize() {
         // Suppress auto-resize behavior
@@ -196,7 +196,7 @@ export class QLSearch extends FormAssociatedElement<string> implements FormAssoc
         this.#ctx = canvas.getContext("2d");
 
         if (!this.#ctx) {
-            console.error("authentik/ql: failed to get canvas context");
+            console.error("ARIA/ql: failed to get canvas context");
             return;
         }
 
@@ -214,7 +214,7 @@ export class QLSearch extends FormAssociatedElement<string> implements FormAssoc
 
     #selectCompletion(index: number) {
         if (!this.#ql) {
-            console.debug(`authentik/ql: Skipping selection of index ${index}, QL not initialized`);
+            console.debug(`ARIA/ql: Skipping selection of index ${index}, QL not initialized`);
             return;
         }
 
@@ -223,14 +223,14 @@ export class QLSearch extends FormAssociatedElement<string> implements FormAssoc
         } catch (error) {
             if (error instanceof TypeError && error.message.includes("convert")) {
                 console.warn(
-                    `authentik/ql: Failed to select invalid completion at index ${index}`,
+                    `ARIA/ql: Failed to select invalid completion at index ${index}`,
                     error.message,
                 );
 
                 return;
             }
 
-            console.warn(`authentik/ql: Failed to select completion at index ${index}:`, error);
+            console.warn(`ARIA/ql: Failed to select completion at index ${index}:`, error);
         }
     }
 

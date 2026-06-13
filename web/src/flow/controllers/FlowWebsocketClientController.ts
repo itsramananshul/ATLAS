@@ -7,11 +7,11 @@ import { ReactiveController, ReactiveControllerHost } from "lit";
 type WebsocketClientControllerHost = ReactiveControllerHost & Interface;
 
 /**
- * Set up the web socket to listen for messages from the authentik server
+ * Set up the web socket to listen for messages from the ARIA server
  *
  * @remarks
  *
- * The authentik server may send notifications to the user's session. This controller handles the
+ * The ARIA server may send notifications to the user's session. This controller handles the
  * lifecycle of our simple websocket listener, which filters and re-issues events into the DOM.
  * Users of this controller are expected to implement a listener and display the events to the user.
  * The current implementation uses `ak-message-notifications`, but that's just a detail.

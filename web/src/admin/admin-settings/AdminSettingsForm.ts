@@ -84,7 +84,7 @@ export class AdminSettingsForm extends Form<SettingsRequest> {
                 .bighelp=${html`
                     <p class="pf-c-form__helper-text">
                         ${msg(
-                            "Configure how authentik should show avatars for users. The following values can be set:",
+                            "Configure how ARIA should show avatars for users. The following values can be set:",
                         )}
                     </p>
                     <ul class="pf-c-list">
@@ -131,7 +131,7 @@ export class AdminSettingsForm extends Form<SettingsRequest> {
                     </ul>
                     <p class="pf-c-form__helper-text">
                         ${msg(
-                            "Multiple values can be set, comma-separated, and authentik will fallback to the next mode when no avatar could be found.",
+                            "Multiple values can be set, comma-separated, and ARIA will fallback to the next mode when no avatar could be found.",
                         )}
                         ${msg(
                             html`For example, setting this to <code>gravatar,initials</code> will
@@ -277,7 +277,7 @@ export class AdminSettingsForm extends Form<SettingsRequest> {
             <ak-form-group
                 label=${msg("Flags")}
                 description=${msg(
-                    "Flags allow you to enable new functionality and behavior in authentik early.",
+                    "Flags allow you to enable new functionality and behavior in ARIA early.",
                 )}
             >
                 <div class="pf-c-form">

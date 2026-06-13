@@ -87,7 +87,7 @@ export const globalVariables = css`
             --pf-global--disabled-color--200
         );
 
-        /* Unique to authentik */
+        /* Unique to ARIA */
         --pf-c-dual-list-selector--selection-desc--FontSize: var(--pf-global--FontSize--xs);
         --pf-c-dual-list-selector--selection-desc--Color: var(--pf-global--Color--dark-200);
         --pf-c-dual-list-selector__status--top-padding: var(--pf-global--spacer--xs);
