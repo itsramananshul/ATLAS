@@ -14,34 +14,38 @@ vars, domains, or wipe data — Coolify pulls the new image and recreates the
 containers **in place**; the Postgres/Redis volumes (your users, configs,
 tokens) persist across updates.
 
-The flow is: **new image in the registry → Coolify redeploys.**
+The flow is: **build on your machine → push images → Coolify redeploys.** No
+GitHub Actions / CI minutes are used — you build and release everything locally.
 
-**Fully automatic (GitHub release → live update):**
-
-1. In Coolify, set the resource's env `ATLAS_VERSION=latest` and enable
-   "Force pull / pull latest images" on deploy.
-2. Add two repo secrets (GitHub → Settings → Secrets and variables → Actions):
-   - `COOLIFY_WEBHOOK` — Coolify deploy URL, e.g.
-     `https://<coolify-host>/api/v1/deploy?uuid=<resource-uuid>&force=true`
-     (Coolify → your resource → Webhooks / the API; UUID is in the resource URL)
-   - `COOLIFY_TOKEN` — a Coolify API token (Settings → API Tokens)
-3. Publish a GitHub Release (e.g. `v1.0.1`). The
-   [`atlas-release` workflow](.github/workflows/atlas-release.yml) builds +
-   pushes `atlas-server` and `atlas-mcp` (tagged `v1.0.1` **and** `latest`),
-   then pings Coolify — which pulls and redeploys. Done, hands-off.
-
-**From your machine (faster — skips the ~30-min CI build):**
+**One command (recommended):**
 
 ```bash
-COOLIFY_WEBHOOK=https://<coolify-host>/api/v1/deploy?uuid=<uuid>&force=true \
+# builds both images, pushes :v1.0.1 + :latest, cuts the GitHub release,
+# and (if COOLIFY_WEBHOOK is set) tells Coolify to redeploy in place
+COOLIFY_WEBHOOK="https://<coolify-host>/api/v1/deploy?uuid=<uuid>&force=true" \
+COOLIFY_TOKEN="<coolify-api-token>" \
 RELEASE=1 ./scripts/ship.sh v1.0.1
 ```
 
-Builds + pushes both images, optionally cuts the GitHub release, and triggers
-the Coolify redeploy.
+Drop `RELEASE=1` to skip cutting a GitHub release; drop the `COOLIFY_*` vars to
+skip the auto-redeploy (then just click **Redeploy** in Coolify yourself).
 
-**Manual (no secrets):** push new images (release or `ship.sh`), then click
-**Redeploy** on the resource in Coolify. Same in-place update.
+**Manual, step by step:**
+
+```bash
+VER=v1.0.1
+docker build -f lifecycle/container/Dockerfile -t ghcr.io/itsramananshul/atlas-server:$VER -t ghcr.io/itsramananshul/atlas-server:latest \
+  --build-arg VERSION=$VER --build-arg GIT_BUILD_HASH=$(git rev-parse --short HEAD) .
+docker build -t ghcr.io/itsramananshul/atlas-mcp:$VER -t ghcr.io/itsramananshul/atlas-mcp:latest ./mcp-server
+docker push ghcr.io/itsramananshul/atlas-server:$VER && docker push ghcr.io/itsramananshul/atlas-server:latest
+docker push ghcr.io/itsramananshul/atlas-mcp:$VER && docker push ghcr.io/itsramananshul/atlas-mcp:latest
+# (optional) cut the release, then in Coolify click Redeploy
+gh release create $VER --repo itsramananshul/ATLAS --generate-notes
+```
+
+In Coolify, set the resource env `ATLAS_VERSION=latest` and enable "Force pull"
+so each **Redeploy** picks up the newest `latest` image — or bump `ATLAS_VERSION`
+to the new tag and redeploy.
 
 > Postgres schema migrations run automatically on server start, so app updates
 > are safe. Take a volume snapshot before major version jumps.
