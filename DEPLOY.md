@@ -7,6 +7,45 @@ ATLAS ships as two prebuilt images you can run on any Docker host:
 
 `docker-compose.prod.yml` pulls these + Postgres + Redis. No building on the VPS.
 
+## Updating — without redoing setup
+
+You set ATLAS up in Coolify **once**. To ship a change you never re-enter env
+vars, domains, or wipe data — Coolify pulls the new image and recreates the
+containers **in place**; the Postgres/Redis volumes (your users, configs,
+tokens) persist across updates.
+
+The flow is: **new image in the registry → Coolify redeploys.**
+
+**Fully automatic (GitHub release → live update):**
+
+1. In Coolify, set the resource's env `ATLAS_VERSION=latest` and enable
+   "Force pull / pull latest images" on deploy.
+2. Add two repo secrets (GitHub → Settings → Secrets and variables → Actions):
+   - `COOLIFY_WEBHOOK` — Coolify deploy URL, e.g.
+     `https://<coolify-host>/api/v1/deploy?uuid=<resource-uuid>&force=true`
+     (Coolify → your resource → Webhooks / the API; UUID is in the resource URL)
+   - `COOLIFY_TOKEN` — a Coolify API token (Settings → API Tokens)
+3. Publish a GitHub Release (e.g. `v1.0.1`). The
+   [`atlas-release` workflow](.github/workflows/atlas-release.yml) builds +
+   pushes `atlas-server` and `atlas-mcp` (tagged `v1.0.1` **and** `latest`),
+   then pings Coolify — which pulls and redeploys. Done, hands-off.
+
+**From your machine (faster — skips the ~30-min CI build):**
+
+```bash
+COOLIFY_WEBHOOK=https://<coolify-host>/api/v1/deploy?uuid=<uuid>&force=true \
+RELEASE=1 ./scripts/ship.sh v1.0.1
+```
+
+Builds + pushes both images, optionally cuts the GitHub release, and triggers
+the Coolify redeploy.
+
+**Manual (no secrets):** push new images (release or `ship.sh`), then click
+**Redeploy** on the resource in Coolify. Same in-place update.
+
+> Postgres schema migrations run automatically on server start, so app updates
+> are safe. Take a volume snapshot before major version jumps.
+
 ## Option A — Coolify (recommended; e.g. Hostinger VPS)
 
 Coolify deploys the compose stack and gives you domains + TLS automatically.

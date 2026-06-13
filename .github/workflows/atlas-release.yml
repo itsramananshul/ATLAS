@@ -1,0 +1,86 @@
+# ATLAS — build & ship on release.
+#
+# When you publish a GitHub Release (or run this manually), it builds the
+# atlas-server + atlas-mcp images, pushes them to GHCR tagged with the release
+# version AND `latest`, then pings Coolify to redeploy. Coolify pulls the new
+# images and recreates the containers IN PLACE — your env vars, domains and data
+# volumes are preserved, so you never redo the Coolify setup.
+#
+# Optional repo secrets (Settings → Secrets and variables → Actions):
+#   COOLIFY_WEBHOOK  full Coolify deploy URL, e.g.
+#                    https://<coolify-host>/api/v1/deploy?uuid=<resource-uuid>&force=true
+#   COOLIFY_TOKEN    a Coolify API token (Bearer)
+# Leave them unset to just build+push (then click Redeploy in Coolify yourself).
+name: ATLAS - Release build & deploy
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Image tag to build (e.g. v1.0.1)"
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: atlas-release
+  cancel-in-progress: false
+
+jobs:
+  ship:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: ver
+        run: echo "version=${{ github.event.release.tag_name || github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & push atlas-server
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: lifecycle/container/Dockerfile
+          push: true
+          build-args: |
+            VERSION=${{ steps.ver.outputs.version }}
+            GIT_BUILD_HASH=${{ github.sha }}
+          tags: |
+            ghcr.io/itsramananshul/atlas-server:${{ steps.ver.outputs.version }}
+            ghcr.io/itsramananshul/atlas-server:latest
+
+      - name: Build & push atlas-mcp
+        uses: docker/build-push-action@v6
+        with:
+          context: ./mcp-server
+          push: true
+          tags: |
+            ghcr.io/itsramananshul/atlas-mcp:${{ steps.ver.outputs.version }}
+            ghcr.io/itsramananshul/atlas-mcp:latest
+
+      - name: Trigger Coolify redeploy
+        env:
+          COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+        run: |
+          if [ -z "$COOLIFY_WEBHOOK" ]; then
+            echo "No COOLIFY_WEBHOOK secret set — images pushed; click Redeploy in Coolify to update."
+            exit 0
+          fi
+          echo "Pinging Coolify to redeploy…"
+          curl --fail --silent --show-error -X GET "$COOLIFY_WEBHOOK" \
+            ${COOLIFY_TOKEN:+-H "Authorization: Bearer $COOLIFY_TOKEN"}
+          echo "Coolify redeploy triggered."
