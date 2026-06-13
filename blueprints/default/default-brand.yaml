@@ -22,25 +22,16 @@ entries:
       branding_custom_css: |
           /* ATLAS / ARIA brand custom CSS — injected into every component shadow root.
              Rounds every "box" like the login card, kills horizontal scrollbars, and
-             lets the black background show through the page chrome. */
+             lets the black background show through the page chrome.
+             NOTE: do NOT set overflow/height/border on the card HOST elements
+             (ak-aggregate-card / ak-*-chart-*) — that breaks ApexCharts auto-sizing
+             and the cards balloon to thousands of px tall. Style .pf-c-card only. */
 
-          /* ---- Cards / boxes: round + clip so no square layer peeks behind ---- */
-          ak-aggregate-card,
+          /* ---- Cards / boxes: round ---- */
           .pf-c-card,
-          .pf-c-content-card,
-          .pf-c-card.pf-c-card-aggregate {
+          .pf-c-content-card {
               border-radius: 20px !important;
-              overflow: hidden !important;
               border: 1px solid rgba(255, 255, 255, 0.1) !important;
-          }
-          /* Inner card parts should not paint their own square background */
-          .pf-c-card__header,
-          .pf-c-card__title,
-          .pf-c-card__body,
-          .pf-c-card__footer,
-          .pf-c-card__expandable-content {
-              background: transparent !important;
-              border-radius: 0 !important;
           }
 
           /* ---- Page chrome transparent so the black body shows ---- */
@@ -69,7 +60,6 @@ entries:
           .pf-c-page__main-section {
               overflow-x: hidden !important;
           }
-          /* The nav-link side margin was widening the list past its container. */
           .pf-c-nav__link {
               border-radius: 12px !important;
               margin-inline: 0 !important;
@@ -103,13 +93,12 @@ entries:
           .pf-c-text-input-group__main,
           .pf-c-text-input-group__text {
               border-radius: 999px !important;
-              overflow: hidden;
           }
           .pf-c-form-control {
               border-radius: 999px !important;
           }
 
-          /* "Last refreshed / pagination" style bars → rounded, not full-width rectangles */
+          /* "Last refreshed / pagination" style bars → rounded */
           .pf-c-pagination,
           .pf-c-pagination__nav,
           .pf-c-toolbar__item.pf-m-pagination {
@@ -131,7 +120,6 @@ entries:
           .pf-c-select__menu,
           .pf-c-tooltip__content {
               border-radius: 16px !important;
-              overflow: hidden;
           }
       flow_authentication:
         !Find [authentik_flows.flow, [slug, default-authentication-flow]]
