@@ -70,7 +70,7 @@ export class SystemTasksPage extends AKElement {
         setPageDetails({
             icon: "pf-icon pf-icon-automation",
             header: msg("System Tasks"),
-            description: msg("Long-running operations which authentik executes in the background."),
+            description: msg("Long-running operations which ARIA executes in the background."),
         });
     }
 }

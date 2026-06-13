@@ -71,7 +71,7 @@ export function renderForm({ provider, errors = {}, brand }: LDAPProviderFormPro
             name="searchMode"
             .options=${searchModeOptions}
             .value=${provider.searchMode}
-            help=${msg("Configure how the outpost queries the core authentik server's users.")}
+            help=${msg("Configure how the outpost queries the core ARIA server's users.")}
         >
         </ak-radio-input>
 

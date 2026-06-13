@@ -451,7 +451,7 @@ export class ApplicationWizardSubmitStep extends CustomEmitterElement(Applicatio
             .with(["reviewing", [P.any, ...P.array()]], () =>
                 this.renderInfo(
                     "error",
-                    msg("authentik was unable to complete this process."),
+                    msg("ARIA was unable to complete this process."),
                     ["fa-times-circle", "pf-m-danger"],
                     this.renderError(),
                 ),

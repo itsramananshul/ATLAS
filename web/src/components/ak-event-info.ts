@@ -62,7 +62,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Logs**
 <details>
-    <summary>Stacktrace from authentik</summary>
+    <summary>Stacktrace from ARIA</summary>
 
 \`\`\`
 ${context.message as string}
@@ -71,7 +71,7 @@ ${context.message as string}
 
 
 **Version and Deployment (please complete the following information):**
-- authentik version: ${import.meta.env.AK_VERSION}
+- ARIA version: ${import.meta.env.AK_VERSION}
 - Deployment: [e.g. docker-compose, helm]
 
 **Additional context**

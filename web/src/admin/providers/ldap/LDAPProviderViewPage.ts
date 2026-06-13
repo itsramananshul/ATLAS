@@ -210,7 +210,7 @@ export class LDAPProviderViewPage extends WithSession(AKElement) {
                                     class="pf-c-form-control"
                                     readonly
                                     type="text"
-                                    value=${msg("Your authentik password")}
+                                    value=${msg("Your ARIA password")}
                                 />
                             </div>
                             <div class="pf-c-form__group">

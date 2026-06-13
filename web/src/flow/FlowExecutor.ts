@@ -442,7 +442,7 @@ export class FlowExecutor extends WithBrandConfig(Interface) implements StageHos
                 <div class="pf-c-login__main-header pf-c-brand" part="branding">
                     ${ThemedImage({
                         src: this.brandingLogo,
-                        alt: msg("authentik Logo"),
+                        alt: msg("ARIA Logo"),
                         className: "branding-logo",
                         theme: this.activeTheme,
                         themedUrls: this.brandingLogoThemedUrls,

@@ -151,7 +151,7 @@ export class PromptForm extends ModelForm<Prompt, string> {
             [PromptTypeEnum.AlertInfo, msg("Alert (Info): Static alert box with info styling")],
             [PromptTypeEnum.AlertWarning, msg("Alert (Warning): Static alert box with warning styling")],
             [PromptTypeEnum.AlertDanger, msg("Alert (Danger): Static alert box with danger styling")],
-            [PromptTypeEnum.AkLocale, msg("authentik: Locale: Displays a list of locales authentik supports.")],
+            [PromptTypeEnum.AkLocale, msg("ARIA: Locale: Displays a list of locales ARIA supports.")],
         ];
         const currentType = this.instance?.type;
         return html` ${map(

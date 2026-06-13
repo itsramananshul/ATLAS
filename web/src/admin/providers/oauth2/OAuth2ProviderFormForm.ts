@@ -448,7 +448,7 @@ export function renderForm({
                         )}
                     </p>
                     <p class="pf-c-form__helper-text">
-                        ${msg("authentik only supports RSA-OAEP-256 for encryption.")}
+                        ${msg("ARIA only supports RSA-OAEP-256 for encryption.")}
                     </p>
                 </ak-form-element-horizontal>
 

@@ -88,9 +88,9 @@ export class CertificateKeyPairListPage extends TablePage<CertificateKeyPair> {
     }
 
     protected override row(item: CertificateKeyPair): SlottedTemplateResult[] {
-        let managedSubText = msg("Managed by authentik");
+        let managedSubText = msg("Managed by ARIA");
         if (item.managed && item.managed.startsWith("goauthentik.io/crypto/discovered")) {
-            managedSubText = msg("Managed by authentik (Discovered)");
+            managedSubText = msg("Managed by ARIA (Discovered)");
         }
         let color = PFColor.Green;
         if (item.certExpiry) {

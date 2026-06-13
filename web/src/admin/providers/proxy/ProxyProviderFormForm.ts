@@ -151,7 +151,7 @@ function renderForwardDomainSettings(
         <div class="pf-u-mb-xl">
             ${msg("An example setup can look like this:")}
             <ul class="pf-c-list">
-                <li>${msg("authentik running on auth.example.com")}</li>
+                <li>${msg("ARIA running on auth.example.com")}</li>
                 <li>${msg("app1 running on app1.example.com")}</li>
             </ul>
             ${msg(

@@ -9,7 +9,7 @@ entries:
     denied_action: message_continue
     designation: stage_configuration
     name: default-oobe-setup
-    title: Welcome to authentik!
+    title: Welcome to ARIA
   id: flow
   identifiers:
     slug: initial-setup
@@ -17,7 +17,7 @@ entries:
 - attrs:
     order: 100
     initial_value:
-      Welcome to authentik! Please set a password and email address for the default admin
+      Welcome to ARIA. Please set a password and email address for the default admin
       user, akadmin.
     placeholder_expression: false
     required: true

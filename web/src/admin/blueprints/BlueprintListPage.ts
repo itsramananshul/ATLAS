@@ -68,7 +68,7 @@ export class BlueprintListPage extends TablePage<BlueprintInstance> {
     protected override searchEnabled = true;
 
     public pageTitle = msg("Blueprints");
-    public pageDescription = msg("Automate and template configuration within authentik.");
+    public pageDescription = msg("Automate and template configuration within ARIA.");
     public pageIcon = "pf-icon pf-icon-blueprint";
 
     public override expandable = true;

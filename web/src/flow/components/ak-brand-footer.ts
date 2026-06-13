@@ -36,7 +36,7 @@ export class BrandLinks extends AKElement {
         const links = [
             ...this.links,
             {
-                name: msg("Powered by authentik"),
+                name: msg("Powered by ARIA"),
                 href: null,
             },
         ];

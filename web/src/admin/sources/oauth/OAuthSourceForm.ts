@@ -159,7 +159,7 @@ export class OAuthSourceForm extends BaseSourceForm<OAuthSource> {
                         spellcheck="false"
                     />
                     <p class="pf-c-form__helper-text">
-                        ${msg("URL used by authentik to retrieve tokens.")}
+                        ${msg("URL used by ARIA to retrieve tokens.")}
                     </p>
                 </ak-form-element-horizontal>
                 <ak-form-element-horizontal label=${msg("Profile URL")} name="profileUrl">
@@ -171,7 +171,7 @@ export class OAuthSourceForm extends BaseSourceForm<OAuthSource> {
                         spellcheck="false"
                     />
                     <p class="pf-c-form__helper-text">
-                        ${msg("URL used by authentik to get user information.")}
+                        ${msg("URL used by ARIA to get user information.")}
                     </p>
                 </ak-form-element-horizontal>
                 ${this.providerType.requestTokenUrl

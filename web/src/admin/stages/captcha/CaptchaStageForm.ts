@@ -198,7 +198,7 @@ export class CaptchaStageForm extends BaseStageForm<CaptchaStage> {
                   id: "captcha.cap-endpoint.description",
                   desc: "Description for Cap endpoint field.",
               })
-            : msg("The public key is used by authentik to render the CAPTCHA widget.", {
+            : msg("The public key is used by ARIA to render the CAPTCHA widget.", {
                   id: "captcha.public-key.description",
                   desc: "Description for CAPTCHA public key field.",
               });

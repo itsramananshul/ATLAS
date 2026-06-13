@@ -140,7 +140,7 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                             },
                         ]}
                         .value=${this.instance?.userDeleteAction}
-                        help=${msg("Determines what authentik will do when a User is deleted.")}
+                        help=${msg("Determines what ARIA will do when a User is deleted.")}
                     >
                     </ak-radio-input>
                     <ak-radio-input
@@ -163,7 +163,7 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                             },
                         ]}
                         .value=${this.instance?.groupDeleteAction}
-                        help=${msg("Determines what authentik will do when a Group is deleted.")}
+                        help=${msg("Determines what ARIA will do when a Group is deleted.")}
                     >
                     </ak-radio-input>
                     <ak-switch-input

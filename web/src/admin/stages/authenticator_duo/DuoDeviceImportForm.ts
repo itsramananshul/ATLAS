@@ -87,7 +87,7 @@ export class DuoDeviceImportForm extends ModelForm<AuthenticatorDuoStage, string
                 </ak-search-select>
 
                 <p class="pf-c-form__helper-text">
-                    ${msg("The user in authentik this device will be assigned to.")}
+                    ${msg("The user in ARIA this device will be assigned to.")}
                 </p>
             </ak-form-element-horizontal>
             <ak-text-input

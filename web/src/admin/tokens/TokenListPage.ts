@@ -89,7 +89,7 @@ export class TokenListPage extends TablePage<Token> {
         return [
             html`<div>${item.identifier}</div>
                 ${item.managed
-                    ? html`<small>${msg("Token is managed by authentik.")}</small>`
+                    ? html`<small>${msg("Token is managed by ARIA.")}</small>`
                     : nothing}`,
             html`<a href="#/identity/users/${item.userObj?.pk}">${item.userObj?.username}</a>`,
             html`<ak-status-label type="warning" ?good=${item.expiring}></ak-status-label>`,

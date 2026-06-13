@@ -118,7 +118,7 @@ export class TransportForm extends ModelForm<NotificationTransport, string> {
                     }}
                     .options=${[
                         {
-                            label: msg("Local (notifications will be created within authentik)"),
+                            label: msg("Local (notifications will be created within ARIA)"),
                             value: TransportModeEnum.Local,
                             default: true,
                         },

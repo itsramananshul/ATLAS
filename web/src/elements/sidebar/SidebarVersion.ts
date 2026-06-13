@@ -52,7 +52,7 @@ export class SidebarVersion extends WithLicenseSummary(WithVersion(AKElement)) {
         }
 
         return html`
-            <footer aria-label=${msg("authentik information")}>
+            <footer aria-label=${msg("ARIA information")}>
                 <button
                     part="trigger"
                     aria-label=${msg("Open about dialog")}

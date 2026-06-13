@@ -85,12 +85,12 @@ export class EnterpriseStatusBanner extends WithLicenseSummary(AKElement) {
         return html`
             ${this.licenseSummary?.licenseFlags.includes(LicenseFlagsEnum.Trial)
                 ? html`<div class="pf-c-banner pf-m-sticky pf-m-gold">
-                      ${msg("This authentik instance uses a Trial license.")}
+                      ${msg("This ARIA instance uses a Trial license.")}
                   </div>`
                 : nothing}
             ${this.licenseSummary?.licenseFlags.includes(LicenseFlagsEnum.NonProduction)
                 ? html`<div class="pf-c-banner pf-m-sticky pf-m-gold">
-                      ${msg("This authentik instance uses a Non-production license.")}
+                      ${msg("This ARIA instance uses a Non-production license.")}
                   </div>`
                 : nothing}
         `;

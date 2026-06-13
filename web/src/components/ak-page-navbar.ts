@@ -173,7 +173,7 @@ export class AKPageNavbar
                         <div class="logo">
                             ${ThemedImage({
                                 src: this.brandingLogo,
-                                alt: msg("authentik Logo"),
+                                alt: msg("ARIA Logo"),
                                 theme: this.activeTheme,
                                 themedUrls: this.brandingLogoThemedUrls,
                             })}
