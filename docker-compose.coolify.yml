@@ -1,0 +1,109 @@
+# ATLAS on Coolify (e.g. Hostinger VPS).
+#
+# Coolify → New Resource → Docker Compose (Empty) → paste this, OR point it at
+# this repo and select docker-compose.coolify.yml. Coolify provides domains +
+# TLS (Let's Encrypt) via its proxy, manages the volumes, and injects its
+# network — so there are NO published host ports here; Coolify routes a domain
+# to each service's exposed port.
+#
+# In Coolify → Environment Variables, set:
+#   PG_PASS, AUTHENTIK_SECRET_KEY              (required)
+#   MCP_AUTHENTIK_TOKEN                        (required for mcp)
+#   ATLAS_VERSION=2026.8.0-rc1                 (or latest)
+#   MCP_AUTHENTIK_URL=https://<your auth domain>   (so OIDC endpoints are public)
+#   ATLAS_MCP_READONLY / ATLAS_MCP_ALLOW / ATLAS_MCP_DENY  (optional scoping)
+#
+# Domains: Coolify auto-fills SERVICE_FQDN_SERVER_9000 (the ATLAS UI) and
+# SERVICE_FQDN_MCP_9100 (the MCP endpoint, path /mcp). Edit them to your own
+# domains in the UI. The atlas-* images are on GHCR — if the packages are
+# private, add a Docker registry credential in Coolify (or make them public).
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - redis:/data
+
+  server:
+    image: ghcr.io/itsramananshul/atlas-server:${ATLAS_VERSION:-latest}
+    restart: unless-stopped
+    command: server
+    environment:
+      # Coolify generates/assigns a domain and proxies it to port 9000.
+      SERVICE_FQDN_SERVER_9000: ${SERVICE_FQDN_SERVER_9000}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_REDIS__HOST: redis
+    expose:
+      - "9000"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    image: ghcr.io/itsramananshul/atlas-server:${ATLAS_VERSION:-latest}
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_REDIS__HOST: redis
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  mcp:
+    image: ghcr.io/itsramananshul/atlas-mcp:${ATLAS_VERSION:-latest}
+    restart: unless-stopped
+    environment:
+      # Coolify generates/assigns a domain and proxies it to port 9100 (path /mcp).
+      SERVICE_FQDN_MCP_9100: ${SERVICE_FQDN_MCP_9100}
+      AUTHENTIK_URL: ${MCP_AUTHENTIK_URL:-http://server:9000}
+      AUTHENTIK_TOKEN: ${MCP_AUTHENTIK_TOKEN}
+      MCP_TRANSPORT: http
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: "9100"
+      ATLAS_MCP_READONLY: ${ATLAS_MCP_READONLY:-false}
+      ATLAS_MCP_ALLOW: ${ATLAS_MCP_ALLOW:-}
+      ATLAS_MCP_DENY: ${ATLAS_MCP_DENY:-}
+    expose:
+      - "9100"
+    depends_on:
+      - server
+
+volumes:
+  database:
+  redis:

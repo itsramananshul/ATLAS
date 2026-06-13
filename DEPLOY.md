@@ -7,7 +7,36 @@ ATLAS ships as two prebuilt images you can run on any Docker host:
 
 `docker-compose.prod.yml` pulls these + Postgres + Redis. No building on the VPS.
 
-## 1. Publish the images (once, from your build machine)
+## Option A — Coolify (recommended; e.g. Hostinger VPS)
+
+Coolify deploys the compose stack and gives you domains + TLS automatically.
+
+1. Publish the images to GHCR (see "Publish the images" below) — once.
+2. Coolify → **New Resource → Docker Compose (Empty)** → paste
+   `docker-compose.coolify.yml` (or connect this repo and pick that file).
+3. If the GHCR packages are **private**, add the registry creds in Coolify
+   (Keys & Tokens → add a Docker registry: `ghcr.io`, user `itsramananshul`,
+   a PAT with `read:packages`) — or make the packages public.
+4. **Environment Variables** (Coolify UI): set `PG_PASS`,
+   `AUTHENTIK_SECRET_KEY` (`openssl rand -base64 60`), `ATLAS_VERSION`,
+   `MCP_AUTHENTIK_TOKEN`, and `MCP_AUTHENTIK_URL=https://<your auth domain>`.
+5. **Domains**: Coolify shows `SERVICE_FQDN_SERVER_9000` (the ATLAS UI) and
+   `SERVICE_FQDN_MCP_9100` (the MCP, path `/mcp`) — set them to your domains;
+   Coolify provisions Let's Encrypt TLS and proxies to the containers.
+6. **Deploy.** Then bootstrap the admin (Coolify → the `server` container →
+   Terminal/Exec): `ak create_recovery_key 10 akadmin` → open the printed link.
+   Mint the MCP token there too (the `ak shell` snippet below), put it in
+   `MCP_AUTHENTIK_TOKEN`, and redeploy.
+
+Notes: no host ports are published — Coolify's proxy handles ingress.
+`MCP_AUTHENTIK_URL` must be your **public** auth domain so OIDC endpoints are
+correct. The MCP endpoint carries an admin token — keep it scoped
+(`ATLAS_MCP_*`) and/or add Basic Auth in Coolify's proxy settings. Once ATLAS
+has its public domain, point ARIA's `ATLAS_ISSUER`/`ATLAS_REDIRECT_URI` at it.
+
+## Option B — plain Docker Compose (manual)
+
+### 1. Publish the images (once, from your build machine)
 
 The images are built locally as `atlas/server:<ver>` (see project README) and
 tagged for GHCR. To push, your GitHub token needs the **`write:packages`** scope:
