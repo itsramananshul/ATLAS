@@ -55,6 +55,61 @@
             console.error("Failed to apply theme", e);
         }
     })();
+
+    /* ATLAS deep theme: some authentik components (e.g. the applications
+       split-button) render in shadow roots that do NOT adopt the brand custom
+       CSS, so their dark-mode primary hover stays light → white-on-white text.
+       Inject a corrective stylesheet into every open shadow root (and any
+       created later) to force readable primary hovers app-wide. */
+    (function () {
+        "use strict";
+        var CSS =
+            ".pf-c-button.pf-m-primary:hover,.pf-c-button.pf-m-primary:focus," +
+            ".pf-c-dropdown__toggle.pf-m-primary:hover,.pf-c-dropdown__toggle.pf-m-primary>button:hover," +
+            ".pf-c-dropdown__toggle.pf-m-primary .pf-c-dropdown__toggle-button:hover," +
+            ".pf-c-menu-toggle.pf-m-primary:hover{" +
+            "background-color:#1f49b8 !important;background-image:none !important;color:#ffffff !important}" +
+            ".pf-c-dropdown__toggle.pf-m-primary:hover *,.pf-c-button.pf-m-primary:hover *{color:#ffffff !important}";
+        var sheet = null;
+        try {
+            sheet = new CSSStyleSheet();
+            sheet.replaceSync(CSS);
+        } catch (e) {
+            return; /* constructable stylesheets unsupported */
+        }
+        function inject(root) {
+            if (!root || !("adoptedStyleSheets" in root)) return;
+            try {
+                if (root.adoptedStyleSheets.indexOf(sheet) === -1) {
+                    root.adoptedStyleSheets = root.adoptedStyleSheets.concat
+                        ? root.adoptedStyleSheets.concat(sheet)
+                        : [].slice.call(root.adoptedStyleSheets).concat(sheet);
+                }
+            } catch (e) {}
+        }
+        function walk(root) {
+            inject(root);
+            var els = root.querySelectorAll ? root.querySelectorAll("*") : [];
+            for (var i = 0; i < els.length; i++) {
+                if (els[i].shadowRoot) walk(els[i].shadowRoot);
+            }
+        }
+        function sweep() {
+            try {
+                walk(document);
+            } catch (e) {}
+        }
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", sweep);
+        } else {
+            sweep();
+        }
+        new MutationObserver(sweep).observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+        });
+        setInterval(sweep, 1500);
+    })();
   </script>
 
   <meta name="color-scheme" content="light dark" />
