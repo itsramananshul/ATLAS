@@ -17,13 +17,13 @@ app_password: admin-password
 
 These credentials are only retrieved when the user authenticates to the proxy.
 
-If the user does not have a matching attribute, authentik falls back to using the user's email address as the username. If the password attribute is not found, the password is empty.
+If the user does not have a matching attribute, ARIA falls back to using the user's email address as the username. If the password attribute is not found, the password is empty.
 
 ## Receiving authentication
 
-By default, when **Intercept header authentication** is enabled, authentik intercepts the `Authorization` header. If the `Authorization` header value is invalid, authentik returns an HTTP `401` error response. Requests without an `Authorization` header are still redirected to the standard login flow.
+By default, when **Intercept header authentication** is enabled, ARIA intercepts the `Authorization` header. If the `Authorization` header value is invalid, ARIA returns an HTTP `401` error response. Requests without an `Authorization` header are still redirected to the standard login flow.
 
-If the proxied application requires the `Authorization` header, disable **Intercept header authentication**. When this setting is disabled, authentik still tries to interpret the `Authorization` header and falls back to the default behavior when it cannot interpret the header.
+If the proxied application requires the `Authorization` header, disable **Intercept header authentication**. When this setting is disabled, ARIA still tries to interpret the `Authorization` header and falls back to the default behavior when it cannot interpret the header.
 
 ### Receiving HTTP Basic authentication
 
@@ -31,13 +31,13 @@ Proxy providers can receive HTTP Basic authentication credentials. The password 
 
 Access control uses the policies bound to the application being accessed.
 
-If the received credentials are invalid, authentik starts the standard authentication flow. If the credentials are correct, authentik removes the `Authorization` header to prevent sending the credentials to the proxied application.
+If the received credentials are invalid, ARIA starts the standard authentication flow. If the credentials are correct, ARIA removes the `Authorization` header to prevent sending the credentials to the proxied application.
 
 :::danger
-We strongly recommend that the client sending requests with HTTP Basic authentication persists the cookies returned by the outpost. Otherwise, every request must be authenticated independently, which increases load on the authentik server and causes a performance impact.
+We strongly recommend that the client sending requests with HTTP Basic authentication persists the cookies returned by the outpost. Otherwise, every request must be authenticated independently, which increases load on the ARIA server and causes a performance impact.
 :::
 
-Starting with authentik 2023.2, logging in with the reserved username `goauthentik.io/token` behaves as if a bearer token was used. The same options as described below apply. This allows token-based authentication for applications that only support basic authentication.
+Starting with ARIA 2023.2, logging in with the reserved username `goauthentik.io/token` behaves as if a bearer token was used. The same options as described below apply. This allows token-based authentication for applications that only support basic authentication.
 
 ### Receiving HTTP Bearer authentication
 
@@ -45,8 +45,8 @@ Proxy providers can receive HTTP Bearer authentication credentials. The token mu
 
 Access control uses the policies bound to the application being accessed.
 
-If the received credentials are invalid, authentik starts the standard authentication flow. If the credentials are correct, authentik removes the `Authorization` header to prevent sending the credentials to the proxied application.
+If the received credentials are invalid, ARIA starts the standard authentication flow. If the credentials are correct, ARIA removes the `Authorization` header to prevent sending the credentials to the proxied application.
 
 :::caution
-We recommend that the client sending requests with HTTP Bearer authentication persists the cookies returned by the outpost. For bearer authentication, this has a smaller impact than for basic authentication, but each request is still verified with the authentik server.
+We recommend that the client sending requests with HTTP Bearer authentication persists the cookies returned by the outpost. For bearer authentication, this has a smaller impact than for basic authentication, but each request is still verified with the ARIA server.
 :::

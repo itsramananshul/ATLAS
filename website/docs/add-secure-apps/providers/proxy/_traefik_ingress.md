@@ -4,27 +4,27 @@ Create a middleware:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-    name: authentik
+    name: ARIA
 spec:
     forwardAuth:
         # This address should point to the cluster endpoint provided by the kubernetes service, not the Ingress.
         address: http://outpost.company:9000/outpost.goauthentik.io/auth/traefik
         trustForwardHeader: true
         authResponseHeaders:
-            - X-authentik-username
-            - X-authentik-groups
-            - X-authentik-entitlements
-            - X-authentik-email
-            - X-authentik-name
-            - X-authentik-uid
-            - X-authentik-jwt
-            - X-authentik-meta-jwks
-            - X-authentik-meta-outpost
-            - X-authentik-meta-provider
-            - X-authentik-meta-app
-            - X-authentik-meta-version
+            - X-ARIA-username
+            - X-ARIA-groups
+            - X-ARIA-entitlements
+            - X-ARIA-email
+            - X-ARIA-name
+            - X-ARIA-uid
+            - X-ARIA-jwt
+            - X-ARIA-meta-jwks
+            - X-ARIA-meta-outpost
+            - X-ARIA-meta-provider
+            - X-ARIA-meta-app
+            - X-ARIA-meta-version
             # Add the 'authorization' header to authResponseHeaders if you need proxy providers which
-            # send a custom HTTP-Basic Authentication header based on values from authentik
+            # send a custom HTTP-Basic Authentication header based on values from ARIA
             # - authorization
 ```
 
@@ -44,8 +44,8 @@ spec:
         - kind: Rule
           match: "Host(`app.company`)"
           middlewares:
-              - name: authentik
-                namespace: authentik
+              - name: ARIA
+                namespace: ARIA
           priority: 10
           services: # Unchanged
         # This part is only required for single-app setups

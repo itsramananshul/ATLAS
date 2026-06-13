@@ -20,7 +20,7 @@ location / {
     proxy_http_version 1.1;
 
     ##############################
-    # authentik-specific config
+    # ARIA-specific config
     ##############################
     auth_request     /outpost.goauthentik.io/auth/nginx;
     error_page       401 = @goauthentik_proxy_signin;
@@ -35,12 +35,12 @@ location / {
     auth_request_set $authentik_name $upstream_http_x_authentik_name;
     auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
 
-    proxy_set_header X-authentik-username $authentik_username;
-    proxy_set_header X-authentik-groups $authentik_groups;
-    proxy_set_header X-authentik-entitlements $authentik_entitlements;
-    proxy_set_header X-authentik-email $authentik_email;
-    proxy_set_header X-authentik-name $authentik_name;
-    proxy_set_header X-authentik-uid $authentik_uid;
+    proxy_set_header X-ARIA-username $authentik_username;
+    proxy_set_header X-ARIA-groups $authentik_groups;
+    proxy_set_header X-ARIA-entitlements $authentik_entitlements;
+    proxy_set_header X-ARIA-email $authentik_email;
+    proxy_set_header X-ARIA-name $authentik_name;
+    proxy_set_header X-ARIA-uid $authentik_uid;
 
     # This section should be uncommented when the "Send HTTP Basic authentication" option
     # is enabled in the proxy provider
@@ -55,7 +55,7 @@ location /outpost.goauthentik.io {
     # For manual outpost deployments:
     # proxy_pass              http://outpost.company:9000;
 
-    # Note: ensure the Host header matches your external authentik URL:
+    # Note: ensure the Host header matches your external ARIA URL:
     proxy_set_header        Host $host;
 
     proxy_set_header        X-Original-URL $scheme://$http_host$request_uri;
@@ -71,7 +71,7 @@ location @goauthentik_proxy_signin {
     internal;
     add_header Set-Cookie $auth_cookie;
     return 302 /outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
-    # For domain level, use the below error_page to redirect to your authentik server with the full redirect path
+    # For domain level, use the below error_page to redirect to your ARIA server with the full redirect path
     # return 302 https://authentik.company/outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
 }
 ```

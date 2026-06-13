@@ -2,15 +2,15 @@
 title: OAuth2/OpenID provider
 ---
 
-In authentik, you can [create](./create-oauth2-provider.md) an [OAuth 2.0](https://oauth.net/2/) provider that authenticates users to an associated application. The provider supports generic OAuth 2.0 clients and OpenID Connect (OIDC) relying parties.
+In ARIA, you can [create](./create-oauth2-provider.md) an [OAuth 2.0](https://oauth.net/2/) provider that authenticates users to an associated application. The provider supports generic OAuth 2.0 clients and OpenID Connect (OIDC) relying parties.
 
-## authentik and OAuth 2.0
+## ARIA and OAuth 2.0
 
-Before looking at the [OAuth 2.0 protocol](#about-oauth-20-and-oidc), it helps to understand the roles that authentik can play.
+Before looking at the [OAuth 2.0 protocol](#about-oauth-20-and-oidc), it helps to understand the roles that ARIA can play.
 
-authentik can act as the OpenID Provider (OP), where authentik is the identity provider, or as the Relying Party (RP), where authentik uses an external OAuth 2.0 or OIDC provider for authentication. To use authentik as the OP, create an OAuth 2.0 provider and attach it to an application. To use authentik as the RP, configure an OAuth [source](../../../users-sources/sources/index.md). The same authentik instance can act as both an OP and an RP.
+ARIA can act as the OpenID Provider (OP), where ARIA is the identity provider, or as the Relying Party (RP), where ARIA uses an external OAuth 2.0 or OIDC provider for authentication. To use ARIA as the OP, create an OAuth 2.0 provider and attach it to an application. To use ARIA as the RP, configure an OAuth [source](../../../users-sources/sources/index.md). The same ARIA instance can act as both an OP and an RP.
 
-authentik supports standard OAuth 2.0 flows and grant types, including authorization code, client credentials, implicit, hybrid, refresh token, and device code. authentik also follows the [OIDC spec](https://openid.net/specs/openid-connect-core-1_0.html), supports PKCE and [GitHub compatibility](./github-compatibility.md), and uses [scope mappings](../property-mappings/index.md#scope-mappings-with-oauth2) to control the claims returned to the RP.
+ARIA supports standard OAuth 2.0 flows and grant types, including authorization code, client credentials, implicit, hybrid, refresh token, and device code. ARIA also follows the [OIDC spec](https://openid.net/specs/openid-connect-core-1_0.html), supports PKCE and [GitHub compatibility](./github-compatibility.md), and uses [scope mappings](../property-mappings/index.md#scope-mappings-with-oauth2) to control the claims returned to the RP.
 
 The OAuth 2.0 provider includes security-focused configuration options such as no cleartext storage of credentials, configurable signing and encryption keys, short token expiration times, and automatic refresh token rotation.
 
@@ -74,11 +74,11 @@ For cross-provider introspection or revocation, authenticate the request with a 
 
 ### Additional configuration options with Redirect URIs
 
-When using an OAuth 2.0 provider in authentik, the OP must validate the redirect URI provided by the RP. An authentik administrator can configure allowed redirect URIs in the provider's **Redirect URI** field.
+When using an OAuth 2.0 provider in ARIA, the OP must validate the redirect URI provided by the RP. An ARIA administrator can configure allowed redirect URIs in the provider's **Redirect URI** field.
 
-If you leave the **Redirect URI** field empty when creating a provider and application, authentik saves the first redirect URI used when a user opens the application.
+If you leave the **Redirect URI** field empty when creating a provider and application, ARIA saves the first redirect URI used when a user opens the application.
 
-For advanced use cases, an authentik administrator can use regular expressions instead of static redirect URLs. For example, you can use a regular expression to match a group of related redirect URLs instead of listing each URL individually. When matching literal periods in hostnames, escape them as `\.` because, in regular expressions, an unescaped period matches any character.
+For advanced use cases, an ARIA administrator can use regular expressions instead of static redirect URLs. For example, you can use a regular expression to match a group of related redirect URLs instead of listing each URL individually. When matching literal periods in hostnames, escape them as `\.` because, in regular expressions, an unescaped period matches any character.
 
 ### OAuth2/OpenID Connect back-channel logout
 
@@ -88,14 +88,14 @@ For more information, see our [OAuth2/OpenID Connect front-channel and back-chan
 
 ## Issuer mode
 
-The **Issuer mode** setting (under **Advanced protocol settings**) controls the value that authentik uses for the `iss` (issuer) claim in the tokens it signs, and for the `issuer` field in the provider's [OpenID Connect discovery document](#oauth-20-endpoints-and-bindings).
+The **Issuer mode** setting (under **Advanced protocol settings**) controls the value that ARIA uses for the `iss` (issuer) claim in the tokens it signs, and for the `issuer` field in the provider's [OpenID Connect discovery document](#oauth-20-endpoints-and-bindings).
 
 | Mode (UI label)                                                                   | `iss` value                                                   |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | **Each provider has a different issuer, based on the application slug** (default) | `https://authentik.company/application/o/<application_slug>/` |
 | **Same identifier is used for all providers**                                     | `https://authentik.company/`                                  |
 
-By default, authentik uses per-provider mode: every provider has a unique issuer derived from its application slug. This is the recommended setting, and matches how the discovery and JWKS endpoints are structured, since both are served under the per-application `/application/o/<application_slug>/` path.
+By default, ARIA uses per-provider mode: every provider has a unique issuer derived from its application slug. This is the recommended setting, and matches how the discovery and JWKS endpoints are structured, since both are served under the per-application `/application/o/<application_slug>/` path.
 
 ### Global issuer mode
 
@@ -129,13 +129,13 @@ The flows and grant types used in this case are those used for a typical authori
 
 The authorization code grant is intended for applications with a backend server. The browser receives an authorization code, and the backend exchanges that code for tokens. During the exchange, confidential clients authenticate to the OP with their client ID and client secret.
 
-If you configure authentik to allow offline access, the OP can return both a short-lived access token and a longer-lived refresh token during the initial authorization. The RP stores the tokens and uses the refresh token to request a new access token before the current access token expires. Depending on the provider settings, the RP can also receive a rotated refresh token without requiring another user interaction.
+If you configure ARIA to allow offline access, the OP can return both a short-lived access token and a longer-lived refresh token during the initial authorization. The RP stores the tokens and uses the refresh token to request a new access token before the current access token expires. Depending on the provider settings, the RP can also receive a rotated refresh token without requiring another user interaction.
 
 :::info
-Starting with authentik 2024.2, applications only receive an access token by default. To receive a refresh token, the application must request the `offline_access` scope and the authentik provider must include the `offline_access` scope mapping.
+Starting with ARIA 2024.2, applications only receive an access token by default. To receive a refresh token, the application must request the `offline_access` scope and the ARIA provider must include the `offline_access` scope mapping.
 :::
 
-The authorization code grant converts an authorization code into an access token and, optionally, a refresh token. The authorization code is issued by the authentik [authorization flow](../../flows-stages/flow/index.md), can only be used once, and expires quickly.
+The authorization code grant converts an authorization code into an access token and, optionally, a refresh token. The authorization code is issued by the ARIA [authorization flow](../../flows-stages/flow/index.md), can only be used once, and expires quickly.
 
 #### Implicit
 
@@ -166,7 +166,7 @@ For more information, see [Device code flow](./device_code.md).
 Refresh tokens let an application obtain new access tokens without requiring another interactive login. Depending on the provider settings, refresh tokens can also be rotated when they are used.
 
 :::info
-Starting with authentik 2024.2, the refresh token grant type requires the `offline_access` scope.
+Starting with ARIA 2024.2, the refresh token grant type requires the `offline_access` scope.
 :::
 
 ## Scope mappings
@@ -175,7 +175,7 @@ Scopes can be configured using scope mappings, a type of [property mapping](../p
 
 ## Scope authorization
 
-By default, every user that has access to an application can request any of the configured scopes. Starting with authentik 2022.4, you can do additional checks for the scope in an expression policy (bound to the application):
+By default, every user that has access to an application can request any of the configured scopes. Starting with ARIA 2022.4, you can do additional checks for the scope in an expression policy (bound to the application):
 
 ```python
 # There are additional fields set in the context; use `ak_logger.debug(request.context)` to see them.
@@ -187,7 +187,7 @@ return True
 
 ## Default & special scopes
 
-When a client does not request any scopes, authentik treats the request as if all configured scopes were requested. Depending on the configured authorization flow, consent still needs to be given, and all scopes are listed there.
+When a client does not request any scopes, ARIA treats the request as if all configured scopes were requested. Depending on the configured authorization flow, consent still needs to be given, and all scopes are listed there.
 
 This does _not_ apply to special scopes, as those are not configurable in the provider.
 
@@ -199,9 +199,9 @@ This does _not_ apply to special scopes, as those are not configurable in the pr
 - `entitlements`: Include application entitlement data.
 - `offline_access`: An OAuth 2.0 scope which indicates that the application is requesting a refresh token.
 
-### authentik
+### ARIA
 
-- `goauthentik.io/api`: This scope grants the refresh token access to the authentik API on behalf of the user.
+- `goauthentik.io/api`: This scope grants the refresh token access to the ARIA API on behalf of the user.
 
 ### GitHub compatibility
 
@@ -212,7 +212,7 @@ This does _not_ apply to special scopes, as those are not configurable in the pr
 
 ### Email scope verification
 
-In authentik releases prior to 2025.10, the email scope always set the `email_verified` claim to `True`. Since authentik does not have a single authoritative source to determine whether a user's email is actually verified, asserting this claim could have security implications. As of 2025.10, `email_verified` now defaults to `False`.
+In ARIA releases prior to 2025.10, the email scope always set the `email_verified` claim to `True`. Since ARIA does not have a single authoritative source to determine whether a user's email is actually verified, asserting this claim could have security implications. As of 2025.10, `email_verified` now defaults to `False`.
 
 Some applications require this claim to be `True` in order to authenticate users. In those cases, you can create a custom email scope mapping (**Customization** > **Property Mappings**) that always returns `email_verified` as `True`:
 
@@ -234,12 +234,12 @@ return {
 
 ## Signing and encryption
 
-Selecting **Signing Key** is optional. [JWTs](https://jwt.io/introduction) created by authentik will always be signed.
+Selecting **Signing Key** is optional. [JWTs](https://jwt.io/introduction) created by ARIA will always be signed.
 
-When **Signing Key** is selected in the provider, authentik signs JWTs asymmetrically with the private key of the selected certificate. Clients can verify those JWTs with the certificate's public key, which is available from the JWKS endpoint listed on the provider page.
+When **Signing Key** is selected in the provider, ARIA signs JWTs asymmetrically with the private key of the selected certificate. Clients can verify those JWTs with the certificate's public key, which is available from the JWKS endpoint listed on the provider page.
 
-When **Signing Key** is not selected, authentik signs JWTs symmetrically with the provider **Client secret**, which is shown in the provider settings.
+When **Signing Key** is not selected, ARIA signs JWTs symmetrically with the provider **Client secret**, which is shown in the provider settings.
 
 ### Encryption
 
-authentik can also encrypt JWTs (turning them into JWEs) that it issues by selecting an **Encryption Key** in the provider. When selected, all JWTs will be encrypted using the selected certificate. authentik uses the `RSA-OAEP-256` key management algorithm with the `A256CBC-HS512` content encryption method.
+ARIA can also encrypt JWTs (turning them into JWEs) that it issues by selecting an **Encryption Key** in the provider. When selected, all JWTs will be encrypted using the selected certificate. ARIA uses the `RSA-OAEP-256` key management algorithm with the `A256CBC-HS512` content encryption method.

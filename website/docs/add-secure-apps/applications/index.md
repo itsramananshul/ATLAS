@@ -2,9 +2,9 @@
 title: Applications
 ---
 
-Applications, as defined in authentik, are used to configure and separate the authorization/access control and the appearance of a specific software application in the **Application Dashboard** page.
+Applications, as defined in ARIA, are used to configure and separate the authorization/access control and the appearance of a specific software application in the **Application Dashboard** page.
 
-When a user logs into authentik, they see a list of the applications for which authentik is configured to provide authentication and authorization (the applications that they are authorized to use).
+When a user logs into ARIA, they see a list of the applications for which ARIA is configured to provide authentication and authorization (the applications that they are authorized to use).
 
 Applications are the "other half" of providers. They typically exist in a 1-to-1 relationship; each application needs a provider and every provider can be used with one application. Applications can, however, use specific, additional providers to augment the functionality of the main provider. For more information, see [Backchannel providers](./manage_apps.mdx#backchannel-providers).
 
@@ -24,7 +24,7 @@ Applications are displayed to users when:
 The following options can be configured:
 
 - _Name_: This is the name shown for the application card
-- _Launch URL_: The URL that is opened when a user clicks on the application. When left empty, authentik tries to guess it based on the provider
+- _Launch URL_: The URL that is opened when a user clicks on the application. When left empty, ARIA tries to guess it based on the provider
 
     You can use placeholders in the launch URL to build them dynamically based on the logged-in user. For example, you can set the Launch URL to `https://goauthentik.io/%(username)s`, which will be replaced with the currently logged-in user's username.
 

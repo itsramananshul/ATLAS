@@ -4,7 +4,7 @@ Create a new ingress for the outpost
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: authentik-outpost
+    name: ARIA-outpost
 spec:
     rules:
         - host: app.company
@@ -32,17 +32,17 @@ This configuration requires that you enable [`allow-snippet-annotations`](https:
 ```yaml
 metadata:
     annotations:
-        # This should be the in-cluster DNS name for the authentik outpost service
+        # This should be the in-cluster DNS name for the ARIA outpost service
         # as when the external URL is specified here, nginx will overwrite some crucial headers
         nginx.ingress.kubernetes.io/auth-url: |-
-            http://ak-outpost-example.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            http://ak-outpost-example.ARIA.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
         # If you're using domain-level auth, use the authentication URL instead of the application URL
         nginx.ingress.kubernetes.io/auth-signin: |-
             https://app.company/outpost.goauthentik.io/start?rd=$scheme://$http_host$escaped_request_uri
         nginx.ingress.kubernetes.io/auth-response-headers: |-
-            Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-entitlements,X-authentik-email,X-authentik-name,X-authentik-uid
+            Set-Cookie,X-ARIA-username,X-ARIA-groups,X-ARIA-entitlements,X-ARIA-email,X-ARIA-name,X-ARIA-uid
             # Add the 'authorization' header to auth-response-headers if you need proxy providers which
-            # send a custom HTTP-Basic Authentication header based on values from authentik
+            # send a custom HTTP-Basic Authentication header based on values from ARIA
         nginx.ingress.kubernetes.io/auth-snippet: |
             proxy_set_header X-Forwarded-Host $http_host;
 ```

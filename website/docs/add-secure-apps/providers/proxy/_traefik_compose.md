@@ -13,28 +13,28 @@ services:
             - "--providers.docker.exposedByDefault=false"
             - "--entrypoints.web.address=:80"
 
-    authentik-proxy:
+    ARIA-proxy:
         image: ghcr.io/goauthentik/proxy
         ports:
             - 9000:9000
             - 9443:9443
         environment:
-            AUTHENTIK_HOST: https://your-authentik.tld
+            AUTHENTIK_HOST: https://your-ARIA.tld
             AUTHENTIK_INSECURE: "false"
-            AUTHENTIK_TOKEN: token-generated-by-authentik
+            AUTHENTIK_TOKEN: token-generated-by-ARIA
             # Starting with 2021.9, you can optionally set this too
             # when authentik_host for internal communication doesn't match the public URL
             # AUTHENTIK_HOST_BROWSER: https://external-domain.tld
         labels:
             traefik.enable: true
             traefik.port: 9000
-            traefik.http.routers.authentik.rule: Host(`app.company`) && PathPrefix(`/outpost.goauthentik.io/`)
-            # `authentik-proxy` refers to the service name in the compose file.
-            traefik.http.middlewares.authentik.forwardauth.address: http://authentik-proxy:9000/outpost.goauthentik.io/auth/traefik
-            traefik.http.middlewares.authentik.forwardauth.trustForwardHeader: true
-            traefik.http.middlewares.authentik.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-entitlements,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
+            traefik.http.routers.ARIA.rule: Host(`app.company`) && PathPrefix(`/outpost.goauthentik.io/`)
+            # `ARIA-proxy` refers to the service name in the compose file.
+            traefik.http.middlewares.ARIA.forwardauth.address: http://ARIA-proxy:9000/outpost.goauthentik.io/auth/traefik
+            traefik.http.middlewares.ARIA.forwardauth.trustForwardHeader: true
+            traefik.http.middlewares.ARIA.forwardauth.authResponseHeaders: X-ARIA-username,X-ARIA-groups,X-ARIA-entitlements,X-ARIA-email,X-ARIA-name,X-ARIA-uid,X-ARIA-jwt,X-ARIA-meta-jwks,X-ARIA-meta-outpost,X-ARIA-meta-provider,X-ARIA-meta-app,X-ARIA-meta-version
             # Add the 'authorization' header to authResponseHeaders if you need proxy providers which
-            # send a custom HTTP-Basic Authentication header based on values from authentik
+            # send a custom HTTP-Basic Authentication header based on values from ARIA
         restart: unless-stopped
 
     whoami:
@@ -42,6 +42,6 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.whoami.rule: Host(`app.company`)
-            traefik.http.routers.whoami.middlewares: authentik@docker
+            traefik.http.routers.whoami.middlewares: ARIA@docker
         restart: unless-stopped
 ```
