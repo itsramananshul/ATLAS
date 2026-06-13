@@ -117,3 +117,75 @@ a.pf-c-button.pf-m-control {
     background-color: var(--aria-input, #181b24);
     color: var(--aria-text, #e9ebf2);
 }
+
+/* ============================================================
+   Dashboard (admin + user) — extend the ARIA aesthetic:
+   pure-black surfaces, dark glass cards, rounded nav/tabs.
+   ============================================================ */
+
+/* Let the body black gradient show through the page chrome. */
+.pf-c-page,
+.pf-c-page__main,
+.pf-c-page__main-section,
+.pf-c-page__header,
+.pf-c-page__sidebar,
+.pf-c-page__sidebar-body,
+.pf-c-drawer,
+.pf-c-drawer__content,
+.pf-c-drawer__panel-main,
+.pf-c-page__main-section.pf-m-light {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Sidebar + top bar: faint dividers, subtle glass. */
+.pf-c-page__sidebar {
+    border-inline-end: 1px solid var(--aria-border) !important;
+    backdrop-filter: blur(14px) saturate(1.1);
+}
+.pf-c-page__header {
+    border-block-end: 1px solid var(--aria-border) !important;
+}
+
+/* Cards / panels → dark glass, rounded. */
+.pf-c-card,
+.pf-c-content-card,
+.pf-c-sidebar__panel {
+    background-color: var(--aria-surface) !important;
+    border: 1px solid var(--aria-border) !important;
+    border-radius: 18px !important;
+    backdrop-filter: blur(16px) saturate(1.15);
+    box-shadow: none !important;
+}
+
+/* Navigation items: rounded, accent on hover/active. */
+.pf-c-nav__link {
+    border-radius: 10px !important;
+    margin-inline: 6px;
+}
+.pf-c-nav__link:hover {
+    background-color: var(--aria-accent-soft) !important;
+}
+.pf-c-nav__link.pf-m-current,
+.pf-c-nav__link[aria-current="page"] {
+    background-color: var(--aria-accent-soft) !important;
+    color: var(--aria-text) !important;
+}
+
+/* Tabs → pill. */
+.pf-c-tabs__link {
+    border-radius: 999px !important;
+}
+.pf-c-tabs__item.pf-m-current .pf-c-tabs__link {
+    background-color: var(--aria-accent-soft) !important;
+}
+
+/* Tables: transparent rows on the black surface. */
+.pf-c-table,
+.pf-c-table > tbody,
+.pf-c-table > thead,
+.pf-c-table tr {
+    background-color: transparent !important;
+}
+
+/* Search/toolbar inputs keep the pill treatment inherited from .pf-c-form-control. */

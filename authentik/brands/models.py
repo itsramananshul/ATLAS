@@ -31,7 +31,7 @@ class Brand(SerializerModel):
         default=False,
     )
 
-    branding_title = models.TextField(default="authentik")
+    branding_title = models.TextField(default="ARIA")
 
     branding_logo = FileField(default="/static/dist/assets/icons/icon_left_brand.svg")
     branding_favicon = FileField(default="/static/dist/assets/icons/icon.png")

@@ -32,14 +32,25 @@
             document.documentElement.dataset.themeChoice = themeChoice;
 
             if (themeChoice === "auto") {
-                document.documentElement.dataset.theme = window.matchMedia(
-                    "(prefers-color-scheme: dark)",
-                ).matches
-                    ? "dark"
-                    : "light";
+                // ATLAS / ARIA is an always-dark surface: "auto" resolves to dark,
+                // ignoring the OS preference.
+                document.documentElement.dataset.theme = "dark";
             } else {
                 document.documentElement.dataset.theme = themeChoice;
             }
+
+            // ARIA guard: the web app re-resolves the theme after load and can
+            // flip "auto" back to light. Keep it dark whenever the choice is auto.
+            new MutationObserver(function () {
+                var de = document.documentElement;
+                var c = de.dataset.themeChoice;
+                if ((!c || c === "auto") && de.dataset.theme !== "dark") {
+                    de.dataset.theme = "dark";
+                }
+            }).observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ["data-theme", "data-theme-choice"],
+            });
         } catch (e) {
             console.error("Failed to apply theme", e);
         }

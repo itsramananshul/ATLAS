@@ -114,23 +114,18 @@ export function formatColorScheme(hint?: string): CSSColorSchemeValue {
  */
 export function resolveUITheme(
     hint?: string,
-    defaultUITheme: ResolvedUITheme = UiThemeEnum.Light,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    defaultUITheme: ResolvedUITheme = UiThemeEnum.Dark,
 ): ResolvedUITheme {
     const colorScheme = formatColorScheme(hint);
 
-    if (colorScheme !== "auto") {
-        return colorScheme;
+    if (colorScheme === "light") {
+        return UiThemeEnum.Light;
     }
 
-    // Given that we don't know the user's preference,
-    // we can determine the theme based on whether the default theme is
-    // currently being overridden.
-
-    const colorSchemeInversion = formatColorScheme(UIThemeInversion[defaultUITheme]);
-
-    const mediaQueryList = createColorSchemeTarget(colorSchemeInversion);
-
-    return mediaQueryList.matches ? colorSchemeInversion : defaultUITheme;
+    // ATLAS / ARIA is an always-dark surface: anything that isn't an explicit
+    // "light" request resolves to dark (OS preference is ignored).
+    return UiThemeEnum.Dark;
 }
 
 /**
@@ -170,7 +165,8 @@ export function createUIThemeEffect(
             return;
         }
 
-        const currentUITheme = event.matches ? colorSchemeTarget : inversionTarget;
+        // ATLAS / ARIA stays dark regardless of the OS color scheme.
+        const currentUITheme = "dark";
 
         if (previousTheme === currentUITheme) return;
 
@@ -181,9 +177,9 @@ export function createUIThemeEffect(
         let theme = formatColorScheme(document.documentElement.dataset.themeChoice);
 
         if (theme === "auto") {
-            theme = mediaQueryList.matches
-                ? colorSchemeTarget
-                : UIThemeInversion[colorSchemeTarget];
+            // ATLAS / ARIA is an always-dark surface: "auto" resolves to dark,
+            // ignoring the OS preference. Explicit light/dark choices still apply.
+            theme = "dark";
         }
 
         document.documentElement.dataset.theme = theme;
