@@ -1,16 +1,27 @@
 /* ATLAS / ARIA brand custom CSS — injected into every component shadow root.
-   Rounds the dashboard "boxes" like the login card and lets the black
-   background show through the page chrome. */
+   Rounds every "box" like the login card, kills horizontal scrollbars, and
+   lets the black background show through the page chrome. */
 
-/* Cards / panels → rounded glass */
+/* ---- Cards / boxes: round + clip so no square layer peeks behind ---- */
+ak-aggregate-card,
 .pf-c-card,
-.pf-c-content-card {
+.pf-c-content-card,
+.pf-c-card.pf-c-card-aggregate {
     border-radius: 20px !important;
-    overflow: hidden;
+    overflow: hidden !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
+/* Inner card parts should not paint their own square background */
+.pf-c-card__header,
+.pf-c-card__title,
+.pf-c-card__body,
+.pf-c-card__footer,
+.pf-c-card__expandable-content {
+    background: transparent !important;
+    border-radius: 0 !important;
+}
 
-/* Page chrome transparent so the black body shows through */
+/* ---- Page chrome transparent so the black body shows ---- */
 .pf-c-page,
 .pf-c-page__main,
 .pf-c-page__main-section,
@@ -29,28 +40,61 @@
     border-block-end: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Navigation items → rounded */
+/* ---- Kill horizontal scrollbars (the left menu and lists) ---- */
+.pf-c-nav,
+.pf-c-nav__list,
+.pf-c-nav__subnav,
+.pf-c-page__main-section {
+    overflow-x: hidden !important;
+}
+/* The nav-link side margin was widening the list past its container. */
 .pf-c-nav__link {
     border-radius: 12px !important;
-    margin-inline: 6px;
+    margin-inline: 0 !important;
 }
 
-/* Tabs → pill */
+/* ---- Tabs ---- */
 .pf-c-tabs__link {
     border-radius: 999px !important;
 }
 
-/* Buttons → rounded (matches the login's rounded actions) */
-.pf-c-button {
+/* ---- Buttons / chips / toggles → rounded (incl. the "User interface" button) ---- */
+.pf-c-button,
+a.pf-c-button,
+button.pf-c-button,
+.pf-c-chip,
+.pf-c-menu-toggle,
+.pf-c-toggle-group__button {
     border-radius: 12px !important;
 }
 
-/* Inputs → pill, like the login */
+/* ---- Toolbars: transparent containers, rounded search & bars ---- */
+.pf-c-toolbar,
+.pf-c-toolbar__content,
+.pf-c-toolbar__content-section,
+.pf-c-toolbar__item,
+.pf-c-toolbar__group {
+    background: transparent !important;
+}
+.pf-c-input-group,
+.pf-c-text-input-group,
+.pf-c-text-input-group__main,
+.pf-c-text-input-group__text {
+    border-radius: 999px !important;
+    overflow: hidden;
+}
 .pf-c-form-control {
     border-radius: 999px !important;
 }
 
-/* Tables sit transparent on the black surface */
+/* "Last refreshed / pagination" style bars → rounded, not full-width rectangles */
+.pf-c-pagination,
+.pf-c-pagination__nav,
+.pf-c-toolbar__item.pf-m-pagination {
+    border-radius: 14px !important;
+}
+
+/* ---- Tables sit transparent on the black surface ---- */
 .pf-c-table,
 .pf-c-table > tbody,
 .pf-c-table > thead,
@@ -58,7 +102,7 @@
     background: transparent !important;
 }
 
-/* Modals, dropdowns, menus → rounded */
+/* ---- Modals, dropdowns, menus → rounded ---- */
 .pf-c-modal-box,
 .pf-c-dropdown__menu,
 .pf-c-menu,
