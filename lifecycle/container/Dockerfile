@@ -24,6 +24,10 @@ WORKDIR /work/web
 COPY ./packages /work/packages
 COPY ./web/packages /work/web/packages
 
+# A Windows-built context ships web/packages/client-ts as a dead symlink stub.
+# Recreate it as a real symlink to the workspace so npm resolves @goauthentik/api.
+RUN rm -rf /work/web/packages/client-ts && ln -sfn ../../packages/client-ts /work/web/packages/client-ts
+
 RUN --mount=type=bind,target=/work/.npmrc,src=./.npmrc \
     --mount=type=bind,target=/work/web/package.json,src=./web/package.json \
     --mount=type=bind,target=/work/web/package-lock.json,src=./web/package-lock.json \
@@ -36,6 +40,10 @@ COPY ./package.json /work
 COPY ./web /work/web/
 # TODO: Update this after moving website to docs
 COPY ./website /work/website/
+
+# Re-fix the client-ts symlink: the full `COPY ./web` above re-introduces the
+# Windows stub, which would break the production web build.
+RUN rm -rf /work/web/packages/client-ts && ln -sfn ../../packages/client-ts /work/web/packages/client-ts
 
 RUN npm run build && \
     npm run build:sfe
