@@ -14,10 +14,23 @@ needed for JWKS verification, the right scope mappings + authorization /
 invalidation flows).
 
 Config (env):
-    AUTHENTIK_URL    base URL, e.g. http://localhost:9000 or https://auth.example.com
-    AUTHENTIK_TOKEN  an authentik API token (Bearer) with admin rights
-    MCP_TRANSPORT    "stdio" (default) or "http" (streamable-HTTP, for hosting)
-    MCP_HOST/MCP_PORT host/port when MCP_TRANSPORT=http (default 0.0.0.0:9100)
+    AUTHENTIK_URL        base URL, e.g. http://localhost:9000 or https://auth.example.com
+    AUTHENTIK_TOKEN      an authentik API token (Bearer) with the rights you want Claude to have
+    MCP_TRANSPORT        "stdio" (default) or "http" (streamable-HTTP, for hosting)
+    MCP_HOST/MCP_PORT    host/port when MCP_TRANSPORT=http (default 0.0.0.0:9100)
+
+Permission scoping (env) — full access by default, restrict when you want:
+    ATLAS_MCP_READONLY   "true" => only read tools; writes (incl. non-GET via
+                         authentik_api) are blocked. Default false (full access).
+    ATLAS_MCP_ALLOW      csv allow-list of tool names and/or groups. If set, ONLY
+                         these are exposed. Groups: read, users, groups, apps, raw.
+                         e.g. "read,apps"  or  "list_users,create_oauth2_application"
+    ATLAS_MCP_DENY       csv deny-list of tool names and/or groups (applied last).
+                         e.g. "raw,set_user_password"
+`health` and `mcp_permissions` are always available so you can see what's on.
+For server-enforced least privilege, ALSO limit the AUTHENTIK_TOKEN's authentik
+role (give it a non-superuser role) — the MCP scoping is convenience, the token
+RBAC is the hard boundary.
 """
 
 import os
@@ -35,6 +48,47 @@ mcp = FastMCP(
     host=os.environ.get("MCP_HOST", "0.0.0.0"),
     port=int(os.environ.get("MCP_PORT", "9100")),
 )
+
+
+# ── permission scoping ─────────────────────────────────────────────────
+
+def _csv(name: str) -> set[str]:
+    return {x.strip() for x in os.environ.get(name, "").split(",") if x.strip()}
+
+READONLY = os.environ.get("ATLAS_MCP_READONLY", "false").lower() in ("1", "true", "yes", "on")
+ALLOW = _csv("ATLAS_MCP_ALLOW")
+DENY = _csv("ATLAS_MCP_DENY")
+
+# Which tools belong to which group (for allow/deny by group).
+GROUPS: dict[str, list[str]] = {
+    "read": ["health", "list_users", "get_user", "list_groups", "list_applications",
+             "list_providers", "get_oauth2_provider", "list_flows", "list_events"],
+    "users": ["create_user", "set_user_password"],
+    "groups": ["create_group"],
+    "apps": ["create_oauth2_application"],
+    "raw": ["authentik_api"],
+}
+_ALWAYS = {"health", "mcp_permissions"}
+
+
+def _allowed(group: str, write: bool, name: str) -> bool:
+    if name in _ALWAYS:
+        return True
+    if DENY & {name, group}:
+        return False
+    if write and READONLY:
+        return False
+    if ALLOW and not ({name, group} & ALLOW):
+        return False
+    return True
+
+
+def tool(group: str, write: bool = False):
+    """Register a tool only if the current permission config allows it, so
+    Claude never even sees tools it isn't permitted to use."""
+    def deco(fn):
+        return mcp.tool()(fn) if _allowed(group, write, fn.__name__) else fn
+    return deco
 
 
 # ── low-level HTTP ─────────────────────────────────────────────────────
@@ -62,38 +116,53 @@ def _req(method: str, path: str, *, json: Any = None, params: dict | None = None
 
 
 def _first(path: str, params: dict) -> dict | None:
-    """Return the first result of a paginated list endpoint, or None."""
     data = _req("GET", path, params=params)
     results = (data or {}).get("results") if isinstance(data, dict) else None
     return results[0] if results else None
 
 
-# ── diagnostics ────────────────────────────────────────────────────────
+# ── diagnostics & introspection (always available) ─────────────────────
 
 @mcp.tool()
 def health() -> dict:
     """Check ATLAS is reachable and the API token works. Returns the authentik
-    version and the identity of the token's user."""
+    version and the identity (+ rights) of the token's user."""
     version = _req("GET", "admin/version/")
     me = _req("GET", "core/users/me/")
     return {"authentik_url": AUTHENTIK_URL, "version": version, "me": me.get("user", me) if isinstance(me, dict) else me}
 
 
+@mcp.tool()
+def mcp_permissions() -> dict:
+    """Report what this MCP server is currently allowed to do (read-only mode,
+    allow/deny lists) and which tools are exposed as a result."""
+    exposed = sorted(n for grp, names in GROUPS.items() for n in names
+                     if _allowed(grp, n in GROUPS["users"] + GROUPS["groups"] + GROUPS["apps"], n)) + sorted(_ALWAYS)
+    return {
+        "readonly": READONLY,
+        "allow": sorted(ALLOW) or "all",
+        "deny": sorted(DENY) or "none",
+        "groups": GROUPS,
+        "exposed_tools": sorted(set(exposed)),
+        "note": "For a hard boundary, also limit the AUTHENTIK_TOKEN's authentik role.",
+    }
+
+
 # ── users ──────────────────────────────────────────────────────────────
 
-@mcp.tool()
+@tool("read")
 def list_users(search: str = "", page_size: int = 50) -> dict:
     """List users. Optional `search` matches username/name/email."""
     return _req("GET", "core/users/", params={"search": search, "page_size": page_size})
 
 
-@mcp.tool()
+@tool("read")
 def get_user(user_id: int) -> dict:
     """Get a single user by numeric id (pk)."""
     return _req("GET", f"core/users/{user_id}/")
 
 
-@mcp.tool()
+@tool("users", write=True)
 def create_user(username: str, name: str, email: str = "", is_active: bool = True, groups: list[str] | None = None) -> dict:
     """Create a user. `groups` is a list of group UUIDs (use list_groups to find them)."""
     body: dict[str, Any] = {"username": username, "name": name, "email": email, "is_active": is_active}
@@ -102,7 +171,7 @@ def create_user(username: str, name: str, email: str = "", is_active: bool = Tru
     return _req("POST", "core/users/", json=body)
 
 
-@mcp.tool()
+@tool("users", write=True)
 def set_user_password(user_id: int, password: str) -> dict:
     """Set (reset) a user's password."""
     return _req("POST", f"core/users/{user_id}/set_password/", json={"password": password})
@@ -110,13 +179,13 @@ def set_user_password(user_id: int, password: str) -> dict:
 
 # ── groups ─────────────────────────────────────────────────────────────
 
-@mcp.tool()
+@tool("read")
 def list_groups(search: str = "", page_size: int = 100) -> dict:
     """List groups."""
     return _req("GET", "core/groups/", params={"search": search, "page_size": page_size})
 
 
-@mcp.tool()
+@tool("groups", write=True)
 def create_group(name: str, is_superuser: bool = False) -> dict:
     """Create a group. Set is_superuser=true to grant its members admin rights."""
     return _req("POST", "core/groups/", json={"name": name, "is_superuser": is_superuser})
@@ -124,31 +193,31 @@ def create_group(name: str, is_superuser: bool = False) -> dict:
 
 # ── applications & providers ───────────────────────────────────────────
 
-@mcp.tool()
+@tool("read")
 def list_applications(page_size: int = 100) -> dict:
     """List applications registered in ATLAS."""
     return _req("GET", "core/applications/", params={"page_size": page_size})
 
 
-@mcp.tool()
+@tool("read")
 def list_providers(page_size: int = 100) -> dict:
     """List all providers (OAuth2/OIDC, proxy, SAML, etc.)."""
     return _req("GET", "providers/all/", params={"page_size": page_size})
 
 
-@mcp.tool()
+@tool("read")
 def get_oauth2_provider(provider_id: int) -> dict:
     """Get an OAuth2/OIDC provider's full config (client_id, redirect_uris, grant_types, etc.)."""
     return _req("GET", f"providers/oauth2/{provider_id}/")
 
 
-@mcp.tool()
+@tool("read")
 def list_flows(page_size: int = 100) -> dict:
     """List authentication/authorization/invalidation flows (slug + designation)."""
     return _req("GET", "flows/instances/", params={"page_size": page_size})
 
 
-@mcp.tool()
+@tool("read")
 def list_events(action: str = "", page_size: int = 50) -> dict:
     """Read the audit log. Optional `action` filters (e.g. 'login', 'login_failed', 'authorize_application')."""
     params: dict[str, Any] = {"page_size": page_size, "ordering": "-created"}
@@ -159,7 +228,7 @@ def list_events(action: str = "", page_size: int = 50) -> dict:
 
 # ── the headline tool: onboard a service behind ATLAS in one call ──────
 
-@mcp.tool()
+@tool("apps", write=True)
 def create_oauth2_application(
     name: str,
     slug: str,
@@ -181,8 +250,7 @@ def create_oauth2_application(
       - the standard OIDC scope mappings are attached.
 
     Args:
-      redirect_uris: allowed callback URLs (strict match), e.g.
-        ["https://app.example.com/api/auth/callback"]
+      redirect_uris: allowed callback URLs (strict match).
       logout_redirect_uris: optional post-logout URLs (strict).
       client_type: "confidential" (server keeps a secret) or "public" (SPA, PKCE only).
       scopes: scope names; default ["openid","email","profile","offline_access"].
@@ -191,8 +259,6 @@ def create_oauth2_application(
     Returns the client_id, client_secret and the OIDC endpoints to wire into the app.
     """
     scopes = scopes or ["openid", "email", "profile", "offline_access"]
-
-    # Resolve the authorization + invalidation flows.
     authz_slug = (
         "default-provider-authorization-implicit-consent"
         if consent == "implicit"
@@ -203,13 +269,11 @@ def create_oauth2_application(
     if not authz or not inval:
         return {"error": "could_not_resolve_flows", "authz": authz_slug, "found_authz": bool(authz), "found_inval": bool(inval)}
 
-    # An RS256 signing key (so JWKS verification works downstream).
     cert = _first("crypto/certificatekeypairs/", {"search": "self-signed", "has_key": "true"})
     if not cert:
         cert = _first("crypto/certificatekeypairs/", {"has_key": "true"})
     signing_key = cert["pk"] if cert else None
 
-    # The OIDC scope mappings (by scope_name).
     sm = _req("GET", "propertymappings/provider/scope/", params={"page_size": 100})
     wanted = {s: None for s in scopes}
     for m in (sm.get("results", []) if isinstance(sm, dict) else []):
@@ -264,11 +328,14 @@ def create_oauth2_application(
 
 # ── generic escape hatch ───────────────────────────────────────────────
 
-@mcp.tool()
+@tool("raw")
 def authentik_api(method: str, path: str, body: dict | None = None, params: dict | None = None) -> dict:
     """Call ANY authentik REST endpoint under /api/v3 — the full admin API.
     method: GET/POST/PATCH/PUT/DELETE. path: e.g. 'core/users/', 'providers/oauth2/3/'.
-    Use this for anything the dedicated tools don't cover."""
+    Use this for anything the dedicated tools don't cover.
+    In read-only mode, only GET is permitted."""
+    if READONLY and method.upper() != "GET":
+        return {"error": "read_only_mode", "detail": f"{method.upper()} blocked: ATLAS_MCP_READONLY is on"}
     return _req(method, path, json=body, params=params)
 
 

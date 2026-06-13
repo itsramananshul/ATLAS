@@ -59,6 +59,36 @@ proxy with TLS and access control** before exposing it — the token grants full
 admin over your identity server. Add it to Claude as a remote MCP server at
 `https://<host>/mcp` (or the path your proxy maps to `:9100`).
 
+## Permissions
+
+By default Claude can do **anything** (full admin) — like the Supabase MCP. You
+can scope it down two ways:
+
+**1. MCP-level (easy toggle, via env):**
+
+| Env | Effect |
+|-----|--------|
+| `ATLAS_MCP_READONLY=true` | Only read tools; all writes (and non-GET `authentik_api`) are blocked |
+| `ATLAS_MCP_ALLOW=read,apps` | Expose **only** these tools/groups |
+| `ATLAS_MCP_DENY=raw,users` | Remove these tools/groups |
+
+Groups: `read`, `users`, `groups`, `apps`, `raw` (the `authentik_api` passthrough).
+You can also name individual tools, e.g. `ATLAS_MCP_DENY=set_user_password`.
+`health` and `mcp_permissions` are always available; call `mcp_permissions` to
+see what's currently exposed. Disallowed tools aren't registered at all, so
+Claude never sees them.
+
+Examples:
+- Let Claude only *look* at things: `ATLAS_MCP_READONLY=true`
+- Let Claude only onboard new apps + read: `ATLAS_MCP_ALLOW=read,apps`
+- Full access but no raw API and no password resets: `ATLAS_MCP_DENY=raw,set_user_password`
+
+**2. Token RBAC (the hard boundary, server-enforced):** the MCP scoping above is
+client-side convenience — the process still holds whatever the token can do. For
+a real boundary, give `AUTHENTIK_TOKEN` a **non-superuser** authentik role with
+only the permissions you want (Directory → Roles/Tokens in ATLAS). Then even the
+raw passthrough can't exceed it.
+
 ## Security
 
 The MCP token is a full-admin authentik API token. Treat it like a root
