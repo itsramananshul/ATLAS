@@ -1,3 +1,11 @@
+# Force LF for scripts and runtime/build files — CRLF breaks the Linux image
+# (shebangs become `bash\r`, rust-toolchain parsing, etc.).
+*.sh text eol=lf
+*.py text eol=lf
+lifecycle/** text eol=lf
+**/Dockerfile text eol=lf
+**/*.Dockerfile text eol=lf
+
 packages/client-*/** linguist-generated
 web/packages/lex/* linguist-vendored
 web/packages/node-domexception/* linguist-vendored
