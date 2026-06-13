@@ -27,12 +27,13 @@ const assets = [
     [require.resolve("@goauthentik/brand-assets/brand.svg"), "./assets/icons/brand.svg"],
     [require.resolve("@goauthentik/brand-assets/icon.png"), "./assets/icons/icon.png"],
     [require.resolve("@goauthentik/brand-assets/icon.svg"), "./assets/icons/icon.svg"],
+    // ATLAS / ARIA brand lockup (repo-local, replaces authentik's icon_left_brand).
     [
-        require.resolve("@goauthentik/brand-assets/icon_left_brand.png"),
+        path.resolve(PackageRoot, "src", "assets", "icons", "icon_left_brand.png"),
         "./assets/icons/icon_left_brand.png",
     ],
     [
-        require.resolve("@goauthentik/brand-assets/icon_left_brand.svg"),
+        path.resolve(PackageRoot, "src", "assets", "icons", "icon_left_brand.svg"),
         "./assets/icons/icon_left_brand.svg",
     ],
     [

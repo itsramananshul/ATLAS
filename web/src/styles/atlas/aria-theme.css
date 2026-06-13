@@ -1,0 +1,112 @@
+/**
+ * @file ATLAS / ARIA theme — global design tokens & variable overrides.
+ *
+ * The authentik login is fully CSS-custom-property driven, and custom
+ * properties inherit through shadow DOM. Setting them here on :root themes
+ * every flow screen at once. Shadow-only raw selectors live in
+ * authentik/atlas.css (injected into every component shadow root).
+ *
+ * ATLAS is always dark — this is a premium dark identity surface, not a
+ * light/dark toggle. Overrides are written to win regardless of theme mode.
+ */
+
+:root {
+    /* #region ARIA palette — Apple monochrome (pure black, white accents) */
+    --aria-bg-0: #000000; /* true black */
+    --aria-bg-1: #040405; /* near black */
+    --aria-bg-2: #09090b; /* faintly raised black */
+    --aria-surface: rgba(255, 255, 255, 0.045); /* glass card */
+    --aria-input: #1c1c1e; /* Apple dark-gray input surface (solid) */
+    --aria-input-focus: #2c2c2e;
+    --aria-text: #f5f5f7; /* Apple off-white */
+    --aria-text-muted: #86868b; /* Apple gray */
+    --aria-border: rgba(255, 255, 255, 0.1);
+    --aria-border-strong: rgba(255, 255, 255, 0.24);
+    --aria-accent: #ffffff; /* white accent */
+    --aria-accent-2: #e8e8ed; /* slightly dimmed white (hover) */
+    --aria-accent-soft: rgba(255, 255, 255, 0.14);
+    --aria-accent-glow: rgba(255, 255, 255, 0.1);
+
+    /* Apple system typography */
+    --pf-global--FontFamily--sans-serif:
+        -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    --pf-global--FontFamily--redhatfont: var(--pf-global--FontFamily--sans-serif);
+    --pf-global--FontFamily--heading--sans-serif: var(--pf-global--FontFamily--sans-serif);
+    /* #endregion */
+
+    /* #region Login card */
+    --ak-c-login__main--BackgroundColor: var(--aria-surface);
+    --ak-c-login__main--Color: var(--aria-text);
+    --ak-c-login__main--BoxShadow:
+        0 40px 90px -25px rgba(0, 0, 0, 0.85), 0 0 0 1px var(--aria-border),
+        0 0 80px -40px var(--aria-accent-glow);
+    --ak-c-login--MaxWidth: 30rem;
+    /* #endregion */
+
+    /* #region Global text & accent */
+    --pf-global--Color--100: var(--aria-text);
+    --pf-global--Color--200: var(--aria-text-muted);
+    --pf-global--Color--light-100: var(--aria-text);
+    --pf-global--link--Color: var(--aria-accent-2);
+    --pf-global--link--Color--hover: var(--aria-accent);
+    --pf-global--primary-color--100: var(--aria-accent);
+    --pf-global--primary-color--200: var(--aria-accent-2);
+    --pf-global--BorderColor--100: var(--aria-border);
+    /* #endregion */
+
+    /* #region Inputs — elongated pill, dark surface, minimal border */
+    --pf-c-form-control--BorderRadius: 999px;
+    --pf-c-form-control--BackgroundColor: var(--aria-input);
+    --pf-c-form-control--Color: var(--aria-text);
+    --pf-c-form-control--BorderTopColor: var(--aria-border);
+    --pf-c-form-control--BorderRightColor: var(--aria-border);
+    --pf-c-form-control--BorderLeftColor: var(--aria-border);
+    --pf-c-form-control--BorderBottomColor: var(--aria-border);
+    --pf-c-form-control--hover--BorderBottomColor: var(--aria-border-strong);
+    --pf-c-form-control--focus--BorderBottomColor: var(--aria-accent);
+    --pf-c-form-control--PaddingTop: 0.85rem;
+    --pf-c-form-control--PaddingBottom: 0.85rem;
+    --pf-c-form-control--PaddingLeft: 1.25rem;
+    --pf-c-form-control--PaddingRight: 1.25rem;
+    --pf-c-form-control--FontSize: 0.95rem;
+    /* #endregion */
+
+    /* #region Primary button — large, highly rounded, focal */
+    --pf-c-button--BorderRadius: 999px;
+    --pf-c-button--m-primary--BackgroundColor: var(--aria-accent);
+    --pf-c-button--m-primary--hover--BackgroundColor: var(--aria-accent-2);
+    --pf-c-button--m-primary--active--BackgroundColor: var(--aria-accent-2);
+    --pf-c-button--m-primary--focus--BackgroundColor: var(--aria-accent-2);
+    --pf-c-button--PaddingTop: 0.95rem;
+    --pf-c-button--PaddingBottom: 0.95rem;
+    --pf-c-button--PaddingLeft: 1.5rem;
+    --pf-c-button--PaddingRight: 1.5rem;
+    --pf-c-button--FontWeight: 600;
+    /* #endregion */
+}
+
+/* Kill authentik's stock photo (set inline on body) and paint the ARIA
+   charcoal gradient on the full-bleed fixed background layer instead. */
+body {
+    --ak-global--background-image: none !important;
+    --ak-global--background-color: var(--aria-bg-0) !important;
+    background-color: var(--aria-bg-0) !important;
+}
+
+body::before,
+.pf-c-login {
+    background-image:
+        radial-gradient(1100px 700px at 50% -20%, rgba(255, 255, 255, 0.04), transparent 60%),
+        linear-gradient(180deg, var(--aria-bg-1) 0%, var(--aria-bg-0) 60%) !important;
+    background-color: var(--aria-bg-0) !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+}
+
+/* Keep the ARIA card color in dark mode (beats authentik's dark override). */
+[data-theme="dark"] .pf-c-login,
+[data-theme="light"] .pf-c-login {
+    --ak-c-login__main--BackgroundColor: var(--aria-surface);
+    --ak-c-login__main--Color: var(--aria-text);
+}

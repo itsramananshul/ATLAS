@@ -1,0 +1,108 @@
+/**
+ * @file ATLAS / ARIA shadow-level overrides.
+ *
+ * Imported by base.css, which authentik appends to EVERY component's shadow
+ * root (last-wins). These are the raw selectors that can't be reached from a
+ * document-level stylesheet because the flow renders inside shadow DOM.
+ *
+ * Custom properties (--aria-*) are inherited in from the document :root
+ * defined in styles/atlas/aria-theme.css.
+ */
+
+/* Glass login card: rounded, blurred, faint bordered. */
+.pf-c-login__main {
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid var(--aria-border, rgba(255, 255, 255, 0.07));
+    background: var(--ak-c-login__main--BackgroundColor, rgba(20, 22, 30, 0.72));
+    backdrop-filter: blur(24px) saturate(1.25);
+    -webkit-backdrop-filter: blur(24px) saturate(1.25);
+}
+
+/* Hide authentik's stock photo background — ARIA uses the charcoal gradient. */
+.pf-c-background-image,
+.pf-c-background-image__filter,
+.pf-c-login > img,
+.pf-c-login__main img.pf-c-background-image {
+    display: none !important;
+}
+
+/* Inputs: dark pill surface. authentik's form.css forces transparent bg and a
+   square radius with !important on the .pf-c-form-control selector, so we must
+   override at the same selector (this sheet loads after it → wins). */
+.pf-c-form-control {
+    --pf-c-form-control--BorderRadius: 999px !important;
+    border-radius: 999px !important;
+    background-color: var(--aria-input, #181b24) !important;
+    border: 1px solid var(--aria-border, rgba(255, 255, 255, 0.07)) !important;
+    color: var(--aria-text, #e9ebf2) !important;
+}
+.pf-c-form-control:focus {
+    border-color: var(--aria-accent, #7c6cff) !important;
+}
+
+/* Large heading: bold, tight, luminous. */
+.pf-c-login__main .pf-c-title {
+    color: var(--aria-text, #e9ebf2);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Primary action: solid white, black label — Apple-style focal point.
+   Rounded rectangle (less round than the full-pill input) and slightly
+   narrower than the input, centered. */
+.pf-c-button.pf-m-primary {
+    border: none;
+    font-weight: 600;
+    background-image: none;
+    background-color: var(--aria-accent, #ffffff) !important;
+    color: #000 !important;
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.8);
+    --pf-c-button--BorderRadius: 10px !important;
+    border-radius: 10px !important;
+    display: block !important;
+    width: 100% !important;
+    margin-inline: auto !important;
+    transition:
+        transform 0.15s ease,
+        opacity 0.2s ease;
+}
+.pf-c-button.pf-m-primary:hover {
+    background-color: var(--aria-accent-2, #e8e8ed) !important;
+    transform: translateY(-1px);
+}
+.pf-c-button.pf-m-primary:active {
+    transform: translateY(0);
+    opacity: 0.9;
+}
+
+/* Brand logo → white monochrome (until a real ARIA mark is dropped in). */
+.pf-c-login__header img,
+.pf-c-brand img,
+.pf-c-brand,
+img.pf-icon,
+.ak-brand img {
+    filter: brightness(0) invert(1);
+}
+
+/* Inputs: focus ring uses the ARIA accent glow. */
+.pf-c-form-control {
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease;
+}
+.pf-c-form-control:focus {
+    background-color: var(--aria-input-focus, #1d212c);
+    box-shadow: 0 0 0 3px var(--aria-accent-soft, rgba(124, 108, 255, 0.16));
+}
+
+/* Secondary / social auth buttons: dark surface, rounded, integrated. */
+.pf-c-login__main-footer-links a,
+.pf-c-login__main-footer .pf-c-button:not(.pf-m-primary),
+a.pf-c-button.pf-m-control {
+    border-radius: 999px;
+    border: 1px solid var(--aria-border, rgba(255, 255, 255, 0.07));
+    background-color: var(--aria-input, #181b24);
+    color: var(--aria-text, #e9ebf2);
+}
