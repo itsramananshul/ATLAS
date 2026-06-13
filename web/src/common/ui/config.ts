@@ -9,7 +9,7 @@ export const DefaultBrand = {
     brandingLogoThemedUrls: null,
     brandingFavicon: "/static/dist/assets/icons/icon.png",
     brandingFaviconThemedUrls: null,
-    brandingTitle: "authentik",
+    brandingTitle: "ARIA",
     brandingCustomCss: "",
     uiFooterLinks: [],
     uiTheme: UiThemeEnum.Automatic,

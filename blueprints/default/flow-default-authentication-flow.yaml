@@ -9,8 +9,8 @@ entries:
     required: false
 - attrs:
     designation: authentication
-    name: Welcome to authentik!
-    title: Welcome to authentik!
+    name: ARIA - Authentication
+    title: Welcome back
     authentication: none
   identifiers:
     slug: default-authentication-flow

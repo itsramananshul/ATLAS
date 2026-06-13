@@ -97,6 +97,17 @@ img.pf-icon,
     box-shadow: 0 0 0 3px var(--aria-accent-soft, rgba(124, 108, 255, 0.16));
 }
 
+/* Password show/hide toggle (input-group control button) → dark, not white. */
+.pf-c-button.pf-m-control {
+    background-color: var(--aria-input, #1c1c1e) !important;
+    color: var(--aria-text, #f5f5f7) !important;
+    border: 1px solid var(--aria-border, rgba(255, 255, 255, 0.1)) !important;
+    border-radius: 0 999px 999px 0 !important;
+}
+.pf-c-button.pf-m-control:hover {
+    background-color: var(--aria-input-focus, #2c2c2e) !important;
+}
+
 /* Secondary / social auth buttons: dark surface, rounded, integrated. */
 .pf-c-login__main-footer-links a,
 .pf-c-login__main-footer .pf-c-button:not(.pf-m-primary),

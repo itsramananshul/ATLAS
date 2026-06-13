@@ -75,7 +75,7 @@ function createChallenge<T extends FlowChallengeLike>(
             pendingUser: "Jessie Lorem",
             pendingUserAvatar: `https://picsum.photos/seed/${avatarSeed++}/64`,
             flowInfo: {
-                title: `<${component}>`,
+                title: "Welcome back",
                 layout: ContextualFlowInfoLayoutEnum.Stacked,
                 cancelUrl: "",
                 background: `https://picsum.photos/seed/${backgroundSeed++}/1920/1080`,
