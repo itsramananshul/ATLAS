@@ -101,6 +101,10 @@ html[data-theme="dark"] {
 html[data-theme="dark"] {
     --pf-global--primary-color--300: oklab(0.522 -0.0434 -0.1717);
     --pf-global--primary-color--100: var(--pf-global--primary-color--300);
+    /* ATLAS: define the primary HOVER shade for dark mode. Without it, PF's
+       primary hover (which uses primary-color--200) falls back to a light
+       default, turning primary buttons/split-toggles white-on-white on hover. */
+    --pf-global--primary-color--200: oklab(0.452 -0.0388 -0.1512);
 }
 
 /* #endregion */
